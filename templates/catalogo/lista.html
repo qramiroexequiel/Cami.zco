@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Catálogo - cami.zco{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <h1 class="text-3xl font-bold mb-8">Nuestro Catálogo</h1>
+    
+    <!-- Filtros por categoría -->
+    {% if categorias %}
+    <div class="mb-8 flex flex-wrap gap-2">
+        <a href="{% url 'catalogo:lista' %}" 
+           class="px-4 py-2 rounded-lg {% if not categoria_actual %}bg-indigo-600 text-white{% else %}bg-gray-200 text-gray-700 hover:bg-gray-300{% endif %} transition">
+            Todas
+        </a>
+        {% for categoria in categorias %}
+        <a href="{% url 'catalogo:lista' %}?categoria={{ categoria.slug }}" 
+           class="px-4 py-2 rounded-lg {% if categoria_actual == categoria.slug %}bg-indigo-600 text-white{% else %}bg-gray-200 text-gray-700 hover:bg-gray-300{% endif %} transition">
+            {{ categoria.nombre }}
+        </a>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Grid de productos -->
+    {% if productos %}
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {% for producto in productos %}
+        <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">
+            <a href="{% url 'catalogo:detalle' producto.slug %}">
+                {% if producto.imagenes.first %}
+                <img src="{{ producto.imagenes.first.imagen.url }}" 
+                     alt="{{ producto.titulo }}" 
+                     class="w-full h-64 object-cover">
+                {% else %}
+                <div class="w-full h-64 bg-gray-200 flex items-center justify-center">
+                    <span class="text-gray-400">Sin imagen</span>
+                </div>
+                {% endif %}
+            </a>
+            <div class="p-4">
+                <h3 class="font-semibold text-lg mb-2">{{ producto.titulo }}</h3>
+                {% if producto.categoria %}
+                <p class="text-sm text-gray-500 mb-2">{{ producto.categoria.nombre }}</p>
+                {% endif %}
+                <p class="text-indigo-600 font-bold mb-4">{{ producto.get_precio_display }}</p>
+                <a href="{% url 'pedidos:crear_con_producto' producto.slug %}" 
+                   class="block w-full bg-indigo-600 text-white text-center py-2 rounded-lg hover:bg-indigo-700 transition">
+                    Pedir este diseño
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Paginación -->
+    {% if is_paginated %}
+    <div class="mt-8 flex justify-center">
+        <div class="flex space-x-2">
+            {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}" class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300">Anterior</a>
+            {% endif %}
+            <span class="px-4 py-2 bg-indigo-600 text-white rounded-lg">{{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}" class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300">Siguiente</a>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+    {% else %}
+    <div class="text-center py-12">
+        <p class="text-gray-600 text-lg">No hay productos disponibles en este momento.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+

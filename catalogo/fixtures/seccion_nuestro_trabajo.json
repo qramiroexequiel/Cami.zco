@@ -1,0 +1,14 @@
+[
+  {
+    "model": "catalogo.seccionhome",
+    "pk": 1,
+    "fields": {
+      "tipo": "nuestro_trabajo",
+      "titulo": "Cristalería grabada, hecha a mano",
+      "texto": "Trabajo con cristalería grabada: copas, vasos y piezas de vidrio personalizadas con diseños únicos.\nCada pieza se graba de forma cuidada, pensando en que sea un regalo especial o un detalle distinto para momentos importantes.\n\nMe gusta que cada trabajo tenga identidad propia, por eso cada pedido se hace a medida, con atención en los detalles y en la calidad del grabado.\n\nSi buscás un regalo personalizado, algo distinto o una pieza especial para un evento, este espacio es para vos.",
+      "activa": true,
+      "orden": 1
+    }
+  }
+]
+

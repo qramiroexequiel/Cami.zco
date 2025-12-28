@@ -1,0 +1,67 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}Productos - Panel de Administración{% endblock %}
+
+{% block dashboard_content %}
+<div class="mb-6 flex justify-between items-center">
+    <h1 class="text-3xl font-bold text-gray-900">Productos</h1>
+    <a href="{% url 'dashboard:producto_crear' %}" class="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition font-semibold">
+        + Crear producto
+    </a>
+</div>
+
+<div class="bg-white rounded-lg shadow-md overflow-hidden">
+    <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Imagen</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nombre</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Precio</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Estado</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Acciones</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                {% for producto in productos %}
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        {% if producto.imagenes.first %}
+                        <img src="{{ producto.imagenes.first.imagen.url }}" alt="{{ producto.titulo }}" class="w-16 h-16 object-cover rounded">
+                        {% else %}
+                        <div class="w-16 h-16 bg-gray-200 rounded flex items-center justify-center text-gray-400 text-xs">Sin imagen</div>
+                        {% endif %}
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="text-sm font-medium text-gray-900">{{ producto.titulo }}</div>
+                        <div class="text-sm text-gray-500">{{ producto.descripcion|truncatewords:10 }}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ producto.get_precio_display }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <form method="post" action="{% url 'dashboard:producto_toggle_activo' producto.id %}" class="inline">
+                            {% csrf_token %}
+                            <button type="submit" class="px-3 py-1 text-xs font-semibold rounded-full 
+                                {% if producto.activo %}bg-green-100 text-green-800{% else %}bg-gray-100 text-gray-800{% endif %}">
+                                {% if producto.activo %}Activo{% else %}Inactivo{% endif %}
+                            </button>
+                        </form>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <a href="{% url 'dashboard:producto_editar' producto.id %}" class="text-indigo-600 hover:text-indigo-900 mr-4">
+                            Editar
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="px-6 py-8 text-center text-gray-500">
+                        No hay productos aún. <a href="{% url 'dashboard:producto_crear' %}" class="text-indigo-600 hover:text-indigo-800">Crear el primero</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+

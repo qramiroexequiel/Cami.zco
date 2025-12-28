@@ -1,0 +1,25 @@
+{% load static %}
+
+{% if pasos %}
+<section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-bold text-center mb-12">Cómo funciona</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {% for paso in pasos %}
+            <div class="text-center">
+                <div class="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    {% if paso.icono %}
+                    <span class="text-3xl">{{ paso.icono }}</span>
+                    {% else %}
+                    <span class="text-2xl font-bold text-indigo-600">{{ paso.numero }}</span>
+                    {% endif %}
+                </div>
+                <h3 class="text-xl font-semibold mb-2">{{ paso.titulo }}</h3>
+                <p class="text-gray-600">{{ paso.descripcion }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+

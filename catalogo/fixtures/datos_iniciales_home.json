@@ -1,0 +1,111 @@
+[
+  {
+    "model": "catalogo.herohome",
+    "pk": 1,
+    "fields": {
+      "titulo": "Vasos Tallados Personalizados",
+      "subtitulo": "Diseños únicos para momentos especiales",
+      "texto_boton": "Hacé tu pedido",
+      "url_cta": "/pedir/",
+      "activo": true
+    }
+  },
+  {
+    "model": "catalogo.pasoproceso",
+    "pk": 1,
+    "fields": {
+      "numero": 1,
+      "titulo": "Elegís el diseño o idea",
+      "descripcion": "Navegá nuestro catálogo o contanos tu idea personalizada. Cada pedido se adapta a lo que buscás.",
+      "icono": "✨",
+      "activo": true,
+      "orden": 1
+    }
+  },
+  {
+    "model": "catalogo.pasoproceso",
+    "pk": 2,
+    "fields": {
+      "numero": 2,
+      "titulo": "Personalizamos tu pedido",
+      "descripcion": "Trabajamos juntos para definir el texto, estilo y detalles de tu pieza única.",
+      "icono": "🎨",
+      "activo": true,
+      "orden": 2
+    }
+  },
+  {
+    "model": "catalogo.pasoproceso",
+    "pk": 3,
+    "fields": {
+      "numero": 3,
+      "titulo": "Lo grabamos y lo entregamos",
+      "descripcion": "Cada pieza se graba con cuidado y te la entregamos lista para disfrutar o regalar.",
+      "icono": "🎁",
+      "activo": true,
+      "orden": 3
+    }
+  },
+  {
+    "model": "catalogo.preguntafrecuente",
+    "pk": 1,
+    "fields": {
+      "pregunta": "¿Cuánto tiempo tarda mi pedido?",
+      "respuesta": "El tiempo de producción es de 7 a 10 días hábiles, dependiendo del diseño y la cantidad. Para pedidos urgentes, contactanos por WhatsApp y vemos qué podemos hacer.",
+      "orden": 1,
+      "activa": true
+    }
+  },
+  {
+    "model": "catalogo.preguntafrecuente",
+    "pk": 2,
+    "fields": {
+      "pregunta": "¿Hacen envíos?",
+      "respuesta": "Sí, coordinamos envíos a todo el país. El costo de envío se calcula según la ubicación y se acuerda al confirmar el pedido.",
+      "orden": 2,
+      "activa": true
+    }
+  },
+  {
+    "model": "catalogo.preguntafrecuente",
+    "pk": 3,
+    "fields": {
+      "pregunta": "¿Puedo personalizar completamente mi diseño?",
+      "respuesta": "¡Por supuesto! Trabajamos con diseños completamente personalizados. Contanos tu idea y la adaptamos a tus necesidades. Cada pieza es única.",
+      "orden": 3,
+      "activa": true
+    }
+  },
+  {
+    "model": "catalogo.preguntafrecuente",
+    "pk": 4,
+    "fields": {
+      "pregunta": "¿Qué métodos de pago aceptan?",
+      "respuesta": "Aceptamos transferencia bancaria, Mercado Pago y efectivo. Los detalles se coordinan al confirmar el pedido.",
+      "orden": 4,
+      "activa": true
+    }
+  },
+  {
+    "model": "catalogo.preguntafrecuente",
+    "pk": 5,
+    "fields": {
+      "pregunta": "¿Hacen trabajos para eventos?",
+      "respuesta": "Sí, trabajamos especialmente para eventos como bodas, cumpleaños de 15, aniversarios y más. Podemos hacer sets personalizados con nombres y fechas.",
+      "orden": 5,
+      "activa": true
+    }
+  },
+  {
+    "model": "catalogo.ctafinal",
+    "pk": 1,
+    "fields": {
+      "titulo": "¿Querés un regalo personalizado?",
+      "texto": "Cada pieza se graba a pedido, con atención en los detalles y en la calidad del grabado.",
+      "texto_boton": "Hacé tu pedido",
+      "url_cta": "/pedir/",
+      "activo": true
+    }
+  }
+]
+

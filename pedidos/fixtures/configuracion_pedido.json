@@ -1,0 +1,14 @@
+[
+  {
+    "model": "pedidos.configuracionpedido",
+    "pk": 1,
+    "fields": {
+      "whatsapp_destino": "5491112345678",
+      "tiempo_entrega": "7-10 días",
+      "tiempo_respuesta": "24-48 horas",
+      "texto_confirmacion": "",
+      "activo": true
+    }
+  }
+]
+

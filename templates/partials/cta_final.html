@@ -1,0 +1,17 @@
+{% load static %}
+
+{% if cta_final %}
+<section class="py-16 bg-indigo-600 text-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">{{ cta_final.titulo }}</h2>
+        {% if cta_final.texto %}
+        <p class="text-xl mb-8 text-indigo-100">{{ cta_final.texto }}</p>
+        {% endif %}
+        <a href="{{ cta_final.url_cta }}" 
+           class="bg-white text-indigo-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-indigo-50 transition inline-block shadow-lg">
+            {{ cta_final.texto_boton }}
+        </a>
+    </div>
+</section>
+{% endif %}
+

@@ -1,0 +1,143 @@
+[
+  {
+    "model": "catalogo.categoria",
+    "pk": 1,
+    "fields": {
+      "nombre": "Vasos",
+      "slug": "vasos",
+      "descripcion": "Vasos tallados personalizados en diferentes tamaños",
+      "orden": 1,
+      "activa": true
+    }
+  },
+  {
+    "model": "catalogo.categoria",
+    "pk": 2,
+    "fields": {
+      "nombre": "Copas",
+      "slug": "copas",
+      "descripcion": "Copas de vino y champagne talladas",
+      "orden": 2,
+      "activa": true
+    }
+  },
+  {
+    "model": "catalogo.categoria",
+    "pk": 3,
+    "fields": {
+      "nombre": "Sets",
+      "slug": "sets",
+      "descripcion": "Sets completos para eventos",
+      "orden": 3,
+      "activa": true
+    }
+  },
+  {
+    "model": "catalogo.categoria",
+    "pk": 4,
+    "fields": {
+      "nombre": "Eventos",
+      "slug": "eventos",
+      "descripcion": "Productos especiales para eventos y celebraciones",
+      "orden": 4,
+      "activa": true
+    }
+  },
+  {
+    "model": "catalogo.producto",
+    "pk": 1,
+    "fields": {
+      "titulo": "Vaso Personalizado Clásico",
+      "slug": "vaso-personalizado-clasico",
+      "descripcion": "Vaso de vidrio tallado con tu nombre o mensaje personalizado. Perfecto para regalos únicos y momentos especiales.",
+      "categoria": 1,
+      "precio": "2500.00",
+      "precio_desde": false,
+      "tiempo_estimado": "7-10 días",
+      "activo": true,
+      "destacado": true,
+      "orden": 1
+    }
+  },
+  {
+    "model": "catalogo.producto",
+    "pk": 2,
+    "fields": {
+      "titulo": "Copa de Vino Tallada",
+      "slug": "copa-de-vino-tallada",
+      "descripcion": "Copa de vino elegante con diseño tallado personalizado. Ideal para aniversarios y ocasiones especiales.",
+      "categoria": 2,
+      "precio": "3200.00",
+      "precio_desde": false,
+      "tiempo_estimado": "10-12 días",
+      "activo": true,
+      "destacado": true,
+      "orden": 2
+    }
+  },
+  {
+    "model": "catalogo.producto",
+    "pk": 3,
+    "fields": {
+      "titulo": "Set de 4 Vasos para Boda",
+      "slug": "set-4-vasos-boda",
+      "descripcion": "Set completo de 4 vasos tallados con nombres de los novios y fecha de la boda. Incluye caja de regalo.",
+      "categoria": 3,
+      "precio": "9500.00",
+      "precio_desde": false,
+      "tiempo_estimado": "12-15 días",
+      "activo": true,
+      "destacado": true,
+      "orden": 3
+    }
+  },
+  {
+    "model": "catalogo.producto",
+    "pk": 4,
+    "fields": {
+      "titulo": "Vaso con Diseño Personalizado",
+      "slug": "vaso-diseno-personalizado",
+      "descripcion": "Vaso con diseño completamente personalizado según tu idea. Trabajamos contigo para crear algo único.",
+      "categoria": 1,
+      "precio": "3500.00",
+      "precio_desde": true,
+      "tiempo_estimado": "10-14 días",
+      "activo": true,
+      "destacado": false,
+      "orden": 4
+    }
+  },
+  {
+    "model": "catalogo.producto",
+    "pk": 5,
+    "fields": {
+      "titulo": "Copas de Champagne para 15 Años",
+      "slug": "copas-champagne-15-anos",
+      "descripcion": "Copas de champagne talladas especialmente para fiestas de 15 años. Incluye nombre y fecha.",
+      "categoria": 4,
+      "precio": "2800.00",
+      "precio_desde": false,
+      "tiempo_estimado": "8-10 días",
+      "activo": true,
+      "destacado": true,
+      "orden": 5
+    }
+  },
+  {
+    "model": "catalogo.producto",
+    "pk": 6,
+    "fields": {
+      "titulo": "Set de Vasos para Cumpleaños",
+      "slug": "set-vasos-cumpleanos",
+      "descripcion": "Set de vasos personalizados para cumpleaños. Perfecto para celebrar con estilo.",
+      "categoria": 3,
+      "precio": "4500.00",
+      "precio_desde": false,
+      "tiempo_estimado": "7-10 días",
+      "activo": true,
+      "destacado": false,
+      "orden": 6
+    }
+  }
+]
+

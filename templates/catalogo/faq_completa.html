@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Preguntas Frecuentes - cami.zco{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="mb-8">
+        <a href="{% url 'home' %}" class="text-indigo-600 hover:text-indigo-800 mb-4 inline-block">← Volver al inicio</a>
+        <h1 class="text-3xl font-bold mb-4">Preguntas Frecuentes</h1>
+        <p class="text-gray-600">Todas las respuestas a tus dudas</p>
+    </div>
+
+    {% if faqs %}
+    <div class="space-y-6">
+        {% for faq in faqs %}
+        <div class="border-b border-gray-200 pb-6 last:border-0">
+            <h3 class="font-semibold text-lg mb-2 text-gray-900">{{ faq.pregunta }}</h3>
+            <p class="text-gray-600 leading-relaxed">{{ faq.respuesta|linebreaks }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-12">
+        <p class="text-gray-600 text-lg">No hay preguntas frecuentes disponibles en este momento.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+

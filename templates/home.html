@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Inicio - cami.zco – Pinturas y grabados{% endblock %}
+
+{% block content %}
+<!-- 1. HERO -->
+{% include 'partials/hero.html' %}
+
+<!-- 2. PRODUCTOS / TRABAJOS DESTACADOS -->
+{% if productos_destacados %}
+<section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-bold text-center mb-12">Productos destacados</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for producto in productos_destacados %}
+            <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">
+                {% if producto.imagenes.first %}
+                <img src="{{ producto.imagenes.first.imagen.url }}" 
+                     alt="{{ producto.titulo }}" 
+                     loading="lazy"
+                     class="w-full h-64 object-cover">
+                {% else %}
+                <div class="w-full h-64 bg-gray-200 flex items-center justify-center">
+                    <span class="text-gray-400">Sin imagen</span>
+                </div>
+                {% endif %}
+                <div class="p-4">
+                    <h3 class="font-semibold text-lg mb-2">{{ producto.titulo }}</h3>
+                    <p class="text-indigo-600 font-bold mb-4">{{ producto.get_precio_display }}</p>
+                    <a href="{% url 'pedidos:crear_con_producto' producto.slug %}" 
+                       class="block w-full bg-indigo-600 text-white text-center py-2 rounded-lg hover:bg-indigo-700 transition">
+                        Pedir este diseño
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% if hay_mas_destacados %}
+        <div class="text-center mt-8">
+            <a href="{% url 'catalogo:lista' %}" 
+               class="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition inline-block">
+                Ver catálogo completo
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endif %}
+
+<!-- 3. SECCIÓN DE CONFIANZA: "Cristalería grabada, hecha a mano" -->
+{% include 'partials/seccion_nuestro_trabajo.html' %}
+
+<!-- 4. CÓMO FUNCIONA (3 pasos) -->
+{% include 'partials/pasos_proceso.html' %}
+
+<!-- 5. GALERÍA DE TRABAJOS REALES -->
+{% include 'partials/galeria_trabajos.html' %}
+
+<!-- 6. FAQ + TIEMPOS DE ENTREGA -->
+{% include 'partials/faq.html' %}
+
+<!-- 7. CTA FINAL -->
+{% include 'partials/cta_final.html' %}
+{% endblock %}

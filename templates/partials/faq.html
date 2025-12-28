@@ -1,0 +1,26 @@
+{% load static %}
+
+{% if faqs %}
+<section class="py-16 bg-white">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-bold text-center mb-12">Preguntas frecuentes</h2>
+        <div class="space-y-6">
+            {% for faq in faqs %}
+            <div class="border-b border-gray-200 pb-6 last:border-0">
+                <h3 class="font-semibold text-lg mb-2 text-gray-900">{{ faq.pregunta }}</h3>
+                <p class="text-gray-600 leading-relaxed">{{ faq.respuesta|linebreaks }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        {% if hay_mas_faqs %}
+        <div class="text-center mt-8">
+            <a href="{% url 'catalogo:faq_completa' %}" 
+               class="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition inline-block">
+                Ver todas las preguntas
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endif %}
+

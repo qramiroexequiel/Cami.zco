@@ -1,0 +1,28 @@
+{% load static %}
+
+{% if hero %}
+<section class="relative {% if hero.imagen_fondo %}bg-cover bg-center bg-no-repeat{% else %}bg-gradient-to-br from-indigo-600 to-purple-700{% endif %} text-white py-20 md:py-32 min-h-[500px] flex items-center"
+         {% if hero.imagen_fondo %}style="background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('{{ hero.imagen_fondo.url }}');"{% endif %}>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+        {% if hero.logo %}
+        <div class="mb-6">
+            <img src="{{ hero.logo.url }}" 
+                 alt="Logo" 
+                 class="h-16 md:h-24 mx-auto object-contain"
+                 loading="eager">
+        </div>
+        {% endif %}
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+            {{ hero.titulo }}
+        </h1>
+        <p class="text-xl md:text-2xl mb-8 {% if hero.imagen_fondo %}text-white{% else %}text-indigo-100{% endif %} max-w-3xl mx-auto">
+            {{ hero.subtitulo }}
+        </p>
+        <a href="{{ hero.url_cta }}" 
+           class="bg-white text-indigo-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-indigo-50 transition inline-block shadow-lg">
+            {{ hero.texto_boton }}
+        </a>
+    </div>
+</section>
+{% endif %}
+
