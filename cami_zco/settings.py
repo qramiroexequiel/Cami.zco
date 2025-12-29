@@ -153,7 +153,10 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
 # WhiteNoise configuration for serving static files in production
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# CompressedManifestStaticFilesStorage requiere staticfiles.json en runtime
+# En Vercel serverless, este archivo puede no estar accesible, causando crash 500
+# Usar CompressedStaticFilesStorage que no requiere manifest file
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 # Media files
 MEDIA_URL = '/media/'
