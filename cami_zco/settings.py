@@ -158,17 +158,34 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 # Cloudinary settings
-CLOUDINARY_CLOUD_NAME = config('CLOUDINARY_CLOUD_NAME')  # Sin default: debe estar en .env
-CLOUDINARY_API_KEY = config('CLOUDINARY_API_KEY')  # Sin default: debe estar en .env
-CLOUDINARY_API_SECRET = config('CLOUDINARY_API_SECRET')  # Sin default: debe estar en .env
+CLOUDINARY_CLOUD_NAME = config('CLOUDINARY_CLOUD_NAME', default='')
+CLOUDINARY_API_KEY = config('CLOUDINARY_API_KEY', default='')
+CLOUDINARY_API_SECRET = config('CLOUDINARY_API_SECRET', default='')
 
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': CLOUDINARY_CLOUD_NAME,
-    'API_KEY': CLOUDINARY_API_KEY,
-    'API_SECRET': CLOUDINARY_API_SECRET,
-}
+# Validar Cloudinary INMEDIATAMENTE después de leer variables
+# En producción (DEBUG=False): fail fast si faltan variables
+# En desarrollo (DEBUG=True): usar FileSystemStorage local si faltan
+CLOUDINARY_CONFIGURED = bool(
+    CLOUDINARY_CLOUD_NAME and CLOUDINARY_API_KEY and CLOUDINARY_API_SECRET
+)
 
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+if not DEBUG and not CLOUDINARY_CONFIGURED:
+    raise ValueError(
+        "Variables de Cloudinary no configuradas en producción. "
+        "CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY y CLOUDINARY_API_SECRET deben estar en .env"
+    )
+
+# Solo configurar Cloudinary si las variables son válidas
+if CLOUDINARY_CONFIGURED:
+    CLOUDINARY_STORAGE = {
+        'CLOUD_NAME': CLOUDINARY_CLOUD_NAME,
+        'API_KEY': CLOUDINARY_API_KEY,
+        'API_SECRET': CLOUDINARY_API_SECRET,
+    }
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+else:
+    # En desarrollo local sin Cloudinary, usar FileSystemStorage
+    DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/6.0/ref/settings/#default-auto-field
@@ -282,11 +299,6 @@ except (OSError, PermissionError):
 if not SECRET_KEY:
     raise ValueError("SECRET_KEY no configurada. Debe estar definida en .env")
 
-if not CLOUDINARY_CLOUD_NAME or not CLOUDINARY_API_KEY or not CLOUDINARY_API_SECRET:
-    raise ValueError(
-        "Variables de Cloudinary no configuradas. "
-        "CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY y CLOUDINARY_API_SECRET deben estar en .env"
-    )
 
 # Validación adicional de DATABASE_URL en producción
 if not DEBUG:
