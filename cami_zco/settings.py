@@ -15,7 +15,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')  # Sin default: debe estar en .env
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=False, cast=bool)
+# python-decouple cast=bool puede fallar cuando Vercel envía "false" (lowercase)
+# Usar parsing manual de string para mayor robustez en serverless
+DEBUG = config('DEBUG', default='False').lower() in ('true', '1', 'yes')
 
 # Normalizar ALLOWED_HOSTS: remover protocolos, espacios y normalizar
 _allowed_hosts_raw = config('ALLOWED_HOSTS', default='localhost,127.0.0.1', cast=Csv())
