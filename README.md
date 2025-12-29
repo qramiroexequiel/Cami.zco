@@ -151,12 +151,16 @@ DEBUG=False
 # IMPORTANTE: Debe ser False en producción
 
 ALLOWED_HOSTS=tu-proyecto.vercel.app,*.vercel.app
+# IMPORTANTE: NO incluir protocolos (https://) en ALLOWED_HOSTS
 # Incluir el dominio de Vercel y wildcard para previews
 # Si tienes dominio personalizado: tu-dominio.com,www.tu-dominio.com
+# El código automáticamente remueve protocolos si están presentes
 
 CSRF_TRUSTED_ORIGINS=https://tu-proyecto.vercel.app,https://*.vercel.app
+# IMPORTANTE: DEBE incluir https:// en CSRF_TRUSTED_ORIGINS
 # URLs con https:// para CSRF protection
 # Si tienes dominio personalizado: https://tu-dominio.com,https://www.tu-dominio.com
+# El código automáticamente agrega https:// si falta
 
 DATABASE_URL=postgresql://user:password@host:port/dbname?sslmode=require
 # Connection string de Neon o Supabase PostgreSQL

@@ -17,7 +17,13 @@ SECRET_KEY = config('SECRET_KEY')  # Sin default: debe estar en .env
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1', cast=Csv())
+# Normalizar ALLOWED_HOSTS: remover protocolos, espacios y normalizar
+_allowed_hosts_raw = config('ALLOWED_HOSTS', default='localhost,127.0.0.1', cast=Csv())
+ALLOWED_HOSTS = [
+    host.strip().replace('https://', '').replace('http://', '').split('/')[0]
+    for host in _allowed_hosts_raw
+    if host.strip()
+]
 
 
 # Application definition
@@ -182,7 +188,18 @@ SESSION_COOKIE_AGE = 1209600  # 2 weeks (default Django)
 # CSRF security
 CSRF_COOKIE_HTTPONLY = False  # Must be False for AJAX requests, but we use SameSite
 CSRF_COOKIE_SAMESITE = 'Lax'  # CSRF protection
-CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', default='', cast=Csv())  # For production domains
+# Normalizar CSRF_TRUSTED_ORIGINS: asegurar https:// y parsear correctamente
+_csrf_origins_raw = config('CSRF_TRUSTED_ORIGINS', default='', cast=Csv())
+CSRF_TRUSTED_ORIGINS = []
+for origin in _csrf_origins_raw:
+    origin = origin.strip()
+    if origin:
+        # Asegurar que tenga https://
+        if not origin.startswith('https://') and not origin.startswith('http://'):
+            origin = f'https://{origin}'
+        # Remover trailing slash
+        origin = origin.rstrip('/')
+        CSRF_TRUSTED_ORIGINS.append(origin)
 
 # Referrer policy
 SECURE_REFERRER_POLICY = 'strict-origin-when-cross-origin'  # Limit referrer information leakage
@@ -244,13 +261,22 @@ LOGGING = {
 }
 
 # Create logs directory if it doesn't exist
-# En Vercel puede no tener permisos de escritura, manejar error gracefully
+# En Vercel/serverless puede no tener permisos de escritura
 try:
     os.makedirs(BASE_DIR / 'logs', exist_ok=True)
 except (OSError, PermissionError):
     # En producción (Vercel) puede no tener permisos, usar solo console handler
-    LOGGING['handlers'] = {k: v for k, v in LOGGING['handlers'].items() if k == 'console'}
-    LOGGING['root']['handlers'] = ['console']
+    # Ajustar configuración de logging para serverless
+    if 'file' in LOGGING.get('handlers', {}):
+        LOGGING['handlers'] = {k: v for k, v in LOGGING['handlers'].items() if k == 'console'}
+    if 'root' in LOGGING:
+        LOGGING['root']['handlers'] = ['console']
+    # También ajustar loggers individuales
+    for logger_name, logger_config in LOGGING.get('loggers', {}).items():
+        if 'handlers' in logger_config and 'file' in logger_config['handlers']:
+            logger_config['handlers'] = [h for h in logger_config['handlers'] if h != 'file']
+            if not logger_config['handlers']:
+                logger_config['handlers'] = ['console']
 
 # Validación de variables críticas: fallar explícitamente si faltan
 if not SECRET_KEY:
@@ -268,4 +294,25 @@ if not DEBUG:
         raise ValueError(
             "DATABASE_URL debe estar configurada con PostgreSQL en producción. "
             "SQLite no está permitido."
+        )
+
+# Validaciones mejoradas para producción (Vercel)
+# Usar warnings en lugar de ValueError para no romper el arranque
+if not DEBUG:
+    # Validar ALLOWED_HOSTS en producción
+    if not ALLOWED_HOSTS or all(host in ['localhost', '127.0.0.1'] for host in ALLOWED_HOSTS):
+        import warnings
+        warnings.warn(
+            "ALLOWED_HOSTS no está configurado para producción. "
+            "Debe incluir dominios de Vercel (ej: *.vercel.app)",
+            UserWarning
+        )
+    
+    # Validar CSRF_TRUSTED_ORIGINS en producción
+    if not CSRF_TRUSTED_ORIGINS:
+        import warnings
+        warnings.warn(
+            "CSRF_TRUSTED_ORIGINS no está configurado en producción. "
+            "Esto puede causar errores CSRF. Configurar con https://*.vercel.app",
+            UserWarning
         )
