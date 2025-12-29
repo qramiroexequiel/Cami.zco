@@ -79,6 +79,13 @@ WSGI_APPLICATION = 'cami_zco.wsgi.application'
 
 DATABASE_URL = config('DATABASE_URL', default='sqlite:///db.sqlite3')
 
+# En producción, SQLite no está permitido
+if not DEBUG and DATABASE_URL.startswith('sqlite'):
+    raise ValueError(
+        "SQLite no está permitido en producción. "
+        "Debe configurar DATABASE_URL con PostgreSQL (ej: postgresql://user:pass@host/db)"
+    )
+
 if DATABASE_URL.startswith('sqlite'):
     DATABASES = {
         'default': {
@@ -87,9 +94,16 @@ if DATABASE_URL.startswith('sqlite'):
         }
     }
 else:
-    DATABASES = {
-        'default': dj_database_url.parse(DATABASE_URL, conn_max_age=600)
-    }
+    # Validar que DATABASE_URL esté bien formada
+    try:
+        DATABASES = {
+            'default': dj_database_url.parse(DATABASE_URL, conn_max_age=600)
+        }
+    except Exception as e:
+        raise ValueError(
+            f"Error al parsear DATABASE_URL: {e}. "
+            "Verifique que DATABASE_URL tenga el formato correcto (postgresql://user:pass@host:port/db)"
+        )
 
 
 # Password validation
@@ -230,7 +244,13 @@ LOGGING = {
 }
 
 # Create logs directory if it doesn't exist
-os.makedirs(BASE_DIR / 'logs', exist_ok=True)
+# En Vercel puede no tener permisos de escritura, manejar error gracefully
+try:
+    os.makedirs(BASE_DIR / 'logs', exist_ok=True)
+except (OSError, PermissionError):
+    # En producción (Vercel) puede no tener permisos, usar solo console handler
+    LOGGING['handlers'] = {k: v for k, v in LOGGING['handlers'].items() if k == 'console'}
+    LOGGING['root']['handlers'] = ['console']
 
 # Validación de variables críticas: fallar explícitamente si faltan
 if not SECRET_KEY:
@@ -241,3 +261,11 @@ if not CLOUDINARY_CLOUD_NAME or not CLOUDINARY_API_KEY or not CLOUDINARY_API_SEC
         "Variables de Cloudinary no configuradas. "
         "CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY y CLOUDINARY_API_SECRET deben estar en .env"
     )
+
+# Validación adicional de DATABASE_URL en producción
+if not DEBUG:
+    if not DATABASE_URL or DATABASE_URL.startswith('sqlite'):
+        raise ValueError(
+            "DATABASE_URL debe estar configurada con PostgreSQL en producción. "
+            "SQLite no está permitido."
+        )

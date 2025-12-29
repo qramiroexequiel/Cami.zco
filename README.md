@@ -139,19 +139,49 @@ vercel
 
 3. **Configurar variables de entorno en Vercel**
 
-En el dashboard de Vercel, agregar las siguientes variables:
+En el dashboard de Vercel (Settings → Environment Variables), agregar las siguientes variables:
+
+**Variables REQUERIDAS (la app fallará sin estas):**
 
 ```
 SECRET_KEY=tu-secret-key-generado
+# Generar con: python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+
 DEBUG=False
-ALLOWED_HOSTS=tu-dominio.vercel.app,www.tu-dominio.com
-DATABASE_URL=postgresql://user:password@host:port/dbname
+# IMPORTANTE: Debe ser False en producción
+
+ALLOWED_HOSTS=tu-proyecto.vercel.app,*.vercel.app
+# Incluir el dominio de Vercel y wildcard para previews
+# Si tienes dominio personalizado: tu-dominio.com,www.tu-dominio.com
+
+CSRF_TRUSTED_ORIGINS=https://tu-proyecto.vercel.app,https://*.vercel.app
+# URLs con https:// para CSRF protection
+# Si tienes dominio personalizado: https://tu-dominio.com,https://www.tu-dominio.com
+
+DATABASE_URL=postgresql://user:password@host:port/dbname?sslmode=require
+# Connection string de Neon o Supabase PostgreSQL
+# Formato: postgresql://usuario:password@host:port/dbname?sslmode=require
+
 CLOUDINARY_CLOUD_NAME=tu-cloud-name
 CLOUDINARY_API_KEY=tu-api-key
 CLOUDINARY_API_SECRET=tu-api-secret
-WHATSAPP_NUMBER=5491155947837
-GA4_MEASUREMENT_ID=tu-ga4-id
+# Credenciales de Cloudinary para almacenamiento de imágenes
 ```
+
+**Variables OPCIONALES:**
+
+```
+WHATSAPP_NUMBER=5491112345678
+# Número de WhatsApp para el botón flotante (formato: 5491112345678)
+
+GA4_MEASUREMENT_ID=G-XXXXXXXXXX
+# Google Analytics 4 Measurement ID (opcional)
+```
+
+**Notas importantes:**
+- Todas las variables deben configurarse para los ambientes: Production, Preview y Development
+- Los dominios `*.vercel.app` son necesarios para que funcionen los previews de Vercel
+- Si usas dominio personalizado, agregarlo también a `ALLOWED_HOSTS` y `CSRF_TRUSTED_ORIGINS`
 
 4. **Configurar base de datos**
 
