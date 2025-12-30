@@ -4,7 +4,6 @@ from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_protect
 from django_ratelimit.decorators import ratelimit
 from django import forms
-from urllib.parse import quote
 from .forms import PedidoForm
 from .models import ConfiguracionPedido
 from catalogo.models import Producto
