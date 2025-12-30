@@ -172,7 +172,6 @@ if not DEBUG:
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
     
-    # Trust proxy headers (required for Vercel/Heroku behind reverse proxy)
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 WHATSAPP_NUMBER = config('WHATSAPP_NUMBER', default='5491112345678')
@@ -262,7 +261,7 @@ if not DEBUG:
         import warnings
         warnings.warn(
             "ALLOWED_HOSTS no está configurado para producción. "
-            "Debe incluir dominios de Vercel (ej: *.vercel.app)",
+            "Debe incluir los dominios donde se accederá al sitio",
             UserWarning
         )
     
@@ -270,6 +269,6 @@ if not DEBUG:
         import warnings
         warnings.warn(
             "CSRF_TRUSTED_ORIGINS no está configurado en producción. "
-            "Esto puede causar errores CSRF. Configurar con https://*.vercel.app",
+            "Esto puede causar errores CSRF. Configurar con los orígenes permitidos",
             UserWarning
         )

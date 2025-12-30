@@ -9,8 +9,8 @@ Este documento contiene los pasos necesarios para desplegar el proyecto en produ
 ```bash
 SECRET_KEY=<generar-con-comando-abajo>
 DEBUG=False
-ALLOWED_HOSTS=tu-proyecto.vercel.app,*.vercel.app
-CSRF_TRUSTED_ORIGINS=https://tu-proyecto.vercel.app,https://*.vercel.app
+ALLOWED_HOSTS=tu-dominio.com,www.tu-dominio.com
+CSRF_TRUSTED_ORIGINS=https://tu-dominio.com,https://www.tu-dominio.com
 DATABASE_URL=postgresql://user:password@host:port/dbname?sslmode=require
 ```
 
@@ -70,7 +70,7 @@ python manage.py createsuperuser
 python manage.py runserver
 ```
 
-## Comandos para Producción (Vercel)
+## Comandos para Producción
 
 ### 1. Pre-deploy checks
 
@@ -81,18 +81,21 @@ python manage.py makemigrations --check --dry-run
 python manage.py collectstatic --noinput
 ```
 
-### 2. Configurar variables en Vercel
+### 2. Configurar variables de entorno
 
-1. Ir a Settings → Environment Variables
-2. Agregar todas las variables requeridas
-3. Configurar para Production, Preview y Development
+Configurar todas las variables requeridas en tu plataforma de hosting:
+- SECRET_KEY
+- DEBUG=False
+- ALLOWED_HOSTS
+- CSRF_TRUSTED_ORIGINS
+- DATABASE_URL
 
 ### 3. Build y deploy
 
-Vercel ejecutará automáticamente:
+Ejecutar en el servidor o durante el build:
 - `pip install -r requirements.txt`
-- `python manage.py migrate` (si está configurado en vercel.json)
-- `python manage.py collectstatic`
+- `python manage.py migrate`
+- `python manage.py collectstatic --noinput`
 
 ### 4. Verificar deploy
 
@@ -144,7 +147,7 @@ Vercel ejecutará automáticamente:
 
 ### Error: SECRET_KEY no configurada
 
-- Verificar que la variable esté en Vercel
+- Verificar que la variable esté configurada en la plataforma
 - Regenerar SECRET_KEY si es necesario
 
 ### Error: DATABASE_URL no válida
@@ -154,8 +157,8 @@ Vercel ejecutará automáticamente:
 
 ### Error: ALLOWED_HOSTS
 
-- Agregar dominio de Vercel: `*.vercel.app`
-- Si hay dominio personalizado, agregarlo también
+- Agregar todos los dominios donde se accederá al sitio
+- Incluir dominio principal y variantes (www, etc.)
 
 ### Error: Static files no cargan
 
@@ -188,11 +191,11 @@ python manage.py makemigrations --check --dry-run
 # Recolectar archivos estáticos
 python manage.py collectstatic --noinput
 
-# Ver logs en producción (Vercel)
-vercel logs
+# Ver logs en producción
+# (comando específico según tu plataforma de hosting)
 
 # Conectar a base de datos (si es necesario)
-# Usar cliente PostgreSQL o herramienta de Neon/Supabase
+# Usar cliente PostgreSQL o herramienta de tu proveedor
 ```
 
 ---
