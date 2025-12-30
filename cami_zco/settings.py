@@ -194,6 +194,11 @@ LOGGING = {
             'style': '{',
         },
     },
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
+        },
+    },
     'handlers': {
         'file': {
             'level': 'ERROR',
@@ -202,7 +207,7 @@ LOGGING = {
             'formatter': 'verbose',
         },
         'console': {
-            'level': 'INFO',
+            'level': 'INFO' if DEBUG else 'WARNING',
             'class': 'logging.StreamHandler',
             'formatter': 'verbose',
         },
