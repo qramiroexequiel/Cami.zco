@@ -1,22 +1,27 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load whatsapp_tags %}
 
 {% block title %}Catálogo - cami.zco{% endblock %}
 
 {% block content %}
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <h1 class="text-3xl font-bold mb-8">Nuestro Catálogo</h1>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+    <!-- Encabezado emocional y claro -->
+    <div class="text-center mb-12 md:mb-16 animate-fade-up">
+        <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-5" style="color: #E5E7EB;">Elegí el regalo perfecto</h1>
+        <p class="text-base md:text-lg max-w-2xl mx-auto leading-relaxed" style="color: #9CA3AF;">Todos los diseños son personalizados y grabados a mano</p>
+    </div>
     
     <!-- Filtros por categoría -->
     {% if categorias %}
-    <div class="mb-8 flex flex-wrap gap-2">
+    <div class="mb-10 md:mb-12 flex flex-wrap gap-2 justify-center animate-fade-up animate-stagger-1">
         <a href="{% url 'catalogo:lista' %}" 
-           class="px-4 py-2 rounded-lg {% if not categoria_actual %}bg-indigo-600 text-white{% else %}bg-gray-200 text-gray-700 hover:bg-gray-300{% endif %} transition">
+           class="px-4 py-2 rounded-full text-sm font-medium transition {% if not categoria_actual %}btn-primary{% else %}btn-secondary{% endif %}">
             Todas
         </a>
         {% for categoria in categorias %}
         <a href="{% url 'catalogo:lista' %}?categoria={{ categoria.slug }}" 
-           class="px-4 py-2 rounded-lg {% if categoria_actual == categoria.slug %}bg-indigo-600 text-white{% else %}bg-gray-200 text-gray-700 hover:bg-gray-300{% endif %} transition">
+           class="px-4 py-2 rounded-full text-sm font-medium transition {% if categoria_actual == categoria.slug %}btn-primary{% else %}btn-secondary{% endif %}">
             {{ categoria.nombre }}
         </a>
         {% endfor %}
@@ -25,30 +30,57 @@
 
     <!-- Grid de productos -->
     {% if productos %}
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10">
         {% for producto in productos %}
-        <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">
-            <a href="{% url 'catalogo:detalle' producto.slug %}">
-                {% if producto.imagenes.first %}
-                <img src="{{ producto.imagenes.first.imagen.url }}" 
-                     alt="{{ producto.titulo }}" 
-                     class="w-full h-64 object-cover">
-                {% else %}
-                <div class="w-full h-64 bg-gray-200 flex items-center justify-center">
-                    <span class="text-gray-400">Sin imagen</span>
+        <div class="card overflow-hidden hover-lift animate-scale-in {% cycle 'animate-stagger-1' 'animate-stagger-2' 'animate-stagger-3' %}">
+            <!-- Imagen protagonista -->
+            {% if producto.imagenes.first %}
+            <img src="{{ producto.imagenes.first.imagen.url }}" 
+                 alt="{{ producto.titulo }}" 
+                 class="w-full h-64 object-cover transition-transform duration-150 hover:scale-105"
+                 style="min-height: 256px;">
+            {% else %}
+            <div class="w-full h-64 flex items-center justify-center" style="background-color: #020617; min-height: 256px;">
+                <span style="color: #9CA3AF;">Sin imagen</span>
+            </div>
+            {% endif %}
+            
+            <div class="p-5 md:p-6">
+                <!-- Nombre del producto -->
+                <h3 class="font-semibold text-lg md:text-xl mb-2" style="color: #E5E7EB;">{{ producto.titulo }}</h3>
+                
+                <!-- Micro-señal de confianza -->
+                <div class="flex items-center gap-1.5 mb-3">
+                    <svg class="w-3.5 h-3.5" style="color: #EC4899; opacity: 0.5;" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                    </svg>
+                    <span class="text-xs" style="color: #9CA3AF; opacity: 0.65;">Grabado a mano · Personalizado</span>
                 </div>
-                {% endif %}
-            </a>
-            <div class="p-4">
-                <h3 class="font-semibold text-lg mb-2">{{ producto.titulo }}</h3>
-                {% if producto.categoria %}
-                <p class="text-sm text-gray-500 mb-2">{{ producto.categoria.nombre }}</p>
-                {% endif %}
-                <p class="text-indigo-600 font-bold mb-4">{{ producto.get_precio_display }}</p>
-                <a href="{% url 'pedidos:crear_con_producto' producto.slug %}" 
-                   class="block w-full bg-indigo-600 text-white text-center py-2 rounded-lg hover:bg-indigo-700 transition">
-                    Pedir este diseño
+                
+                <!-- Precio visible pero no dominante -->
+                <p class="font-bold mb-5 text-lg md:text-xl bg-gradient-to-r from-[#F97316] via-[#EC4899] to-[#8B5CF6] bg-clip-text text-transparent">{{ producto.get_precio_display }}</p>
+                
+                <!-- CTA único: WhatsApp -->
+                {% if config_sitio and config_sitio.whatsapp_numero and config_sitio.whatsapp_numero.strip %}
+                {% mensaje_whatsapp producto.titulo as mensaje_codificado %}
+                <a href="https://wa.me/{{ config_sitio.whatsapp_numero }}?text={{ mensaje_codificado }}" 
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   class="btn-whatsapp-card block w-full text-center text-sm md:text-base py-3 md:py-0">
+                    <svg class="w-4 h-4 inline-block mr-2" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                    </svg>
+                    Quiero este diseño
                 </a>
+                {% else %}
+                <a href="{% url 'pedidos:crear_con_producto' producto.slug %}" 
+                   class="btn-whatsapp-card block w-full text-center text-sm md:text-base py-3 md:py-0">
+                    <svg class="w-4 h-4 inline-block mr-2" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                    </svg>
+                    Quiero este diseño
+                </a>
+                {% endif %}
             </div>
         </div>
         {% endfor %}
@@ -59,18 +91,18 @@
     <div class="mt-8 flex justify-center">
         <div class="flex space-x-2">
             {% if page_obj.has_previous %}
-            <a href="?page={{ page_obj.previous_page_number }}" class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300">Anterior</a>
+            <a href="?page={{ page_obj.previous_page_number }}" class="btn-secondary text-sm">Anterior</a>
             {% endif %}
-            <span class="px-4 py-2 bg-indigo-600 text-white rounded-lg">{{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+            <span class="px-4 py-2 rounded-full text-sm font-medium" style="background: linear-gradient(135deg, #F97316 0%, #EC4899 50%, #8B5CF6 100%); color: white;">{{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
             {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}" class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300">Siguiente</a>
+            <a href="?page={{ page_obj.next_page_number }}" class="btn-secondary text-sm">Siguiente</a>
             {% endif %}
         </div>
     </div>
     {% endif %}
     {% else %}
     <div class="text-center py-12">
-        <p class="text-gray-600 text-lg">No hay productos disponibles en este momento.</p>
+        <p class="text-lg" style="color: #9CA3AF;">No hay productos disponibles en este momento.</p>
     </div>
     {% endif %}
 </div>

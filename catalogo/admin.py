@@ -1,7 +1,8 @@
 from django.contrib import admin
 from .models import (
     Categoria, Producto, ImagenProducto, SeccionHome, ImagenSeccion,
-    HeroHome, PasoProceso, GaleriaTrabajo, PreguntaFrecuente, CTAFinal
+    HeroHome, PasoProceso, GaleriaTrabajo, PreguntaFrecuente, CTAFinal,
+    ConfiguracionSitio
 )
 
 
@@ -160,3 +161,28 @@ class CTAFinalAdmin(admin.ModelAdmin):
             'fields': ('activo',)
         }),
     )
+
+
+@admin.register(ConfiguracionSitio)
+class ConfiguracionSitioAdmin(admin.ModelAdmin):
+    list_display = ('__str__', 'whatsapp_sitio', 'instagram')
+    
+    fieldsets = (
+        ('Redes Sociales', {
+            'fields': ('instagram', 'instagram_url', 'whatsapp_sitio', 'whatsapp_numero', 'whatsapp_mensaje'),
+            'description': 'Configuración de enlaces a redes sociales. Instagram URL es la URL completa del perfil.'
+        }),
+        ('Configuración General', {
+            'fields': ('texto_boton_pedido', 'banner_activo', 'banner_texto', 'notas_internas_pedidos')
+        }),
+    )
+    
+    def has_add_permission(self, request):
+        # Solo permitir un registro (singleton)
+        if ConfiguracionSitio.objects.exists():
+            return False
+        return super().has_add_permission(request)
+    
+    def has_delete_permission(self, request, obj=None):
+        # No permitir eliminar la configuración
+        return False

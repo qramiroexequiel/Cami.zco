@@ -1,0 +1,47 @@
+{% extends "admin/login.html" %}
+{% load static %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{% static 'admin/custom_admin.css' %}">
+<style>
+    #header {
+        background: linear-gradient(135deg, #F97316 0%, #EC4899 50%, #8B5CF6 100%);
+        border-bottom: none;
+    }
+    
+    #branding h1 {
+        color: white;
+    }
+    
+    .login #container {
+        background: #0F172A;
+        border: 1px solid rgba(229, 231, 235, 0.1);
+    }
+    
+    .login .form-row input {
+        background: #020617;
+        border: 1px solid rgba(229, 231, 235, 0.2);
+        color: #E5E7EB;
+    }
+    
+    .login .form-row input:focus {
+        border-color: #EC4899;
+        box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1);
+    }
+    
+    .login .submit-row input {
+        background: linear-gradient(135deg, #F97316 0%, #EC4899 50%, #8B5CF6 100%);
+        border: none;
+        color: white;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+    
+    .login .submit-row input:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
+    }
+</style>
+{% endblock %}
+

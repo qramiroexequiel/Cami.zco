@@ -11,15 +11,9 @@ import dj_database_url
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY')  # Sin default: debe estar en .env
+SECRET_KEY = config('SECRET_KEY')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-# python-decouple cast=bool puede fallar cuando Vercel envía "false" (lowercase)
-# Usar parsing manual de string para mayor robustez en serverless
 DEBUG = config('DEBUG', default='False').lower() in ('true', '1', 'yes')
-
-# Normalizar ALLOWED_HOSTS: remover protocolos, espacios y normalizar
 _allowed_hosts_raw = config('ALLOWED_HOSTS', default='localhost,127.0.0.1', cast=Csv())
 ALLOWED_HOSTS = [
     host.strip().replace('https://', '').replace('http://', '').split('/')[0]
@@ -47,7 +41,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # Servir static files en producción
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -71,6 +65,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'cami_zco.context_processors.whatsapp_number',
                 'cami_zco.context_processors.google_analytics',
+                'cami_zco.context_processors.configuracion_sitio',
             ],
         },
     },
@@ -79,12 +74,8 @@ TEMPLATES = [
 WSGI_APPLICATION = 'cami_zco.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/6.0/ref/settings/#databases
-
 DATABASE_URL = config('DATABASE_URL', default='sqlite:///db.sqlite3')
 
-# En producción, SQLite no está permitido
 if not DEBUG and DATABASE_URL.startswith('sqlite'):
     raise ValueError(
         "SQLite no está permitido en producción. "
@@ -99,10 +90,7 @@ if DATABASE_URL.startswith('sqlite'):
         }
     }
 else:
-    # Validar que DATABASE_URL esté bien formada
     try:
-        # En serverless (Vercel), conn_max_age puede causar problemas en cold starts
-        # Usar conn_max_age=0 para conexiones efímeras (más seguro en serverless)
         DATABASES = {
             'default': dj_database_url.parse(DATABASE_URL, conn_max_age=0)
         }
@@ -113,8 +101,6 @@ else:
         )
 
 
-# Password validation
-# https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -132,8 +118,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/6.0/topics/i18n/
 
 LANGUAGE_CODE = 'es-ar'
 
@@ -144,81 +128,55 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [BASE_DIR / 'static']
-
-# WhiteNoise configuration for serving static files in production
-# CompressedManifestStaticFilesStorage requiere staticfiles.json en runtime
-# En Vercel serverless, este archivo puede no estar accesible, causando crash 500
-# Usar CompressedStaticFilesStorage que no requiere manifest file
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
-# Media files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
-
-# Usar FileSystemStorage estándar de Django para media files
+MEDIA_ROOT.mkdir(exist_ok=True)
 DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/6.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Security settings
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 X_FRAME_OPTIONS = 'DENY'
 
-# Session security
-SESSION_COOKIE_HTTPONLY = True  # Prevents JavaScript access to session cookie
-SESSION_COOKIE_SAMESITE = 'Lax'  # CSRF protection for cross-site requests
-SESSION_COOKIE_AGE = 1209600  # 2 weeks (default Django)
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = 'Lax'
+SESSION_COOKIE_AGE = 1209600
 
-# CSRF security
-CSRF_COOKIE_HTTPONLY = False  # Must be False for AJAX requests, but we use SameSite
-CSRF_COOKIE_SAMESITE = 'Lax'  # CSRF protection
-# Normalizar CSRF_TRUSTED_ORIGINS: asegurar https:// y parsear correctamente
+CSRF_COOKIE_HTTPONLY = False
+CSRF_COOKIE_SAMESITE = 'Lax'
 _csrf_origins_raw = config('CSRF_TRUSTED_ORIGINS', default='', cast=Csv())
 CSRF_TRUSTED_ORIGINS = []
 for origin in _csrf_origins_raw:
     origin = origin.strip()
     if origin:
-        # Asegurar que tenga https://
         if not origin.startswith('https://') and not origin.startswith('http://'):
             origin = f'https://{origin}'
-        # Remover trailing slash
         origin = origin.rstrip('/')
         CSRF_TRUSTED_ORIGINS.append(origin)
 
-# Referrer policy
-SECURE_REFERRER_POLICY = 'strict-origin-when-cross-origin'  # Limit referrer information leakage
+SECURE_REFERRER_POLICY = 'strict-origin-when-cross-origin'
 
 if not DEBUG:
     SECURE_SSL_REDIRECT = True
-    SESSION_COOKIE_SECURE = True  # Only send over HTTPS
-    CSRF_COOKIE_SECURE = True  # Only send over HTTPS
-    # HSTS: Force HTTPS for 1 year (31536000 seconds)
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
     SECURE_HSTS_SECONDS = 31536000
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
 
-# WhatsApp number
 WHATSAPP_NUMBER = config('WHATSAPP_NUMBER', default='5491112345678')
-
-# Google Analytics 4
 GA4_MEASUREMENT_ID = config('GA4_MEASUREMENT_ID', default='')
 
-# Authentication
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/dashboard/'
 LOGOUT_REDIRECT_URL = '/'
-
-# Logging
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -254,41 +212,29 @@ LOGGING = {
     },
 }
 
-# Create logs directory if it doesn't exist
-# En Vercel/serverless puede no tener permisos de escritura
 try:
     os.makedirs(BASE_DIR / 'logs', exist_ok=True)
 except (OSError, PermissionError):
-    # En producción (Vercel) puede no tener permisos, usar solo console handler
-    # Ajustar configuración de logging para serverless
     if 'file' in LOGGING.get('handlers', {}):
         LOGGING['handlers'] = {k: v for k, v in LOGGING['handlers'].items() if k == 'console'}
     if 'root' in LOGGING:
         LOGGING['root']['handlers'] = ['console']
-    # También ajustar loggers individuales
     for logger_name, logger_config in LOGGING.get('loggers', {}).items():
         if 'handlers' in logger_config and 'file' in logger_config['handlers']:
             logger_config['handlers'] = [h for h in logger_config['handlers'] if h != 'file']
             if not logger_config['handlers']:
                 logger_config['handlers'] = ['console']
 
-# Validación de variables críticas: fallar explícitamente si faltan
 if not SECRET_KEY:
     raise ValueError("SECRET_KEY no configurada. Debe estar definida en .env")
 
-
-# Validación adicional de DATABASE_URL en producción
 if not DEBUG:
     if not DATABASE_URL or DATABASE_URL.startswith('sqlite'):
         raise ValueError(
             "DATABASE_URL debe estar configurada con PostgreSQL en producción. "
             "SQLite no está permitido."
         )
-
-# Validaciones mejoradas para producción (Vercel)
-# Usar warnings en lugar de ValueError para no romper el arranque
-if not DEBUG:
-    # Validar ALLOWED_HOSTS en producción
+    
     if not ALLOWED_HOSTS or all(host in ['localhost', '127.0.0.1'] for host in ALLOWED_HOSTS):
         import warnings
         warnings.warn(
@@ -297,7 +243,6 @@ if not DEBUG:
             UserWarning
         )
     
-    # Validar CSRF_TRUSTED_ORIGINS en producción
     if not CSRF_TRUSTED_ORIGINS:
         import warnings
         warnings.warn(

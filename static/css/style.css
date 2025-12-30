@@ -1,20 +1,361 @@
 /* Custom styles for cami.zco */
 
+/* ============================================
+   THEME BASE - Paleta de colores premium
+   ============================================ */
+:root {
+    --bg-primary: #0F172A;
+    --bg-secondary: #020617;
+    --text-primary: #E5E7EB;
+    --text-secondary: #9CA3AF;
+    --accent-orange: #F97316;
+    --accent-pink: #EC4899;
+    --accent-purple: #8B5CF6;
+    --whatsapp-green: #25D366;
+    --whatsapp-green-hover: #20BA5A;
+}
+
+/* ============================================
+   TIPOGRAFÍA Y TEXTOS BASE
+   ============================================ */
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Links globales */
+a {
+    color: var(--text-primary);
+    transition: all 0.2s ease;
+}
+
+a:hover {
+    color: var(--accent-pink);
+}
+
+a:focus-visible {
+    outline: 2px solid var(--accent-pink);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+/* ============================================
+   BOTONES REUTILIZABLES
+   ============================================ */
+
+/* Botón Principal - Gradiente marca (pill, sombra, hover scale) */
+.btn-primary {
+    background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-pink) 50%, var(--accent-purple) 100%);
+    color: white;
+    padding: 0.75rem 2rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    box-shadow: 0 4px 14px 0 rgba(249, 115, 22, 0.3);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px 0 rgba(249, 115, 22, 0.4);
+}
+
+.btn-primary:active {
+    transform: scale(0.98);
+    transition: transform 0.05s ease;
+}
+
+.btn-primary:focus-visible {
+    outline: 2px solid var(--accent-pink);
+    outline-offset: 3px;
+}
+
+/* Botón Secundario - Outline claro, fondo transparente */
+.btn-secondary {
+    background: transparent;
+    color: var(--text-primary);
+    padding: 0.75rem 2rem;
+    border-radius: 9999px;
+    font-weight: 500;
+    font-size: 1rem;
+    border: 1.5px solid rgba(229, 231, 235, 0.25);
+    cursor: pointer;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    transition: border-color 0.12s ease, background-color 0.12s ease, opacity 0.12s ease, transform 0.12s ease;
+    opacity: 0.85;
+}
+
+.btn-secondary:hover {
+    border-color: rgba(229, 231, 235, 0.5);
+    background: rgba(229, 231, 235, 0.08);
+    color: var(--text-primary);
+    opacity: 1;
+    transform: translateY(-1px);
+}
+
+.btn-secondary:active {
+    transform: translateY(0);
+    transition: transform 0.05s ease;
+}
+
+.btn-secondary:focus-visible {
+    outline: 2px solid var(--accent-pink);
+    outline-offset: 3px;
+    opacity: 1;
+}
+
+/* Botón WhatsApp - Verde oficial (base) - Feedback inmediato */
+.btn-whatsapp {
+    background-color: var(--whatsapp-green);
+    color: white;
+    padding: 0.75rem 2rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    box-shadow: 0 4px 14px 0 rgba(37, 211, 102, 0.3);
+    transition: background-color 0.12s ease, transform 0.12s ease, box-shadow 0.12s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-whatsapp::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+    transition: left 0.4s ease;
+}
+
+.btn-whatsapp:hover {
+    background-color: var(--whatsapp-green-hover);
+    box-shadow: 0 6px 24px 0 rgba(37, 211, 102, 0.5), 0 0 20px rgba(37, 211, 102, 0.2);
+    transform: translateY(-2px) scale(1.02);
+}
+
+.btn-whatsapp:hover::before {
+    left: 100%;
+}
+
+.btn-whatsapp:active {
+    transform: translateY(0) scale(0.98);
+    transition: transform 0.05s ease;
+}
+
+.btn-whatsapp:focus-visible {
+    outline: 2px solid var(--whatsapp-green-hover);
+    outline-offset: 3px;
+}
+
+/* Botón WhatsApp Hero - Más destacado - Feedback inmediato */
+.btn-whatsapp-hero {
+    background-color: var(--whatsapp-green);
+    color: white;
+    padding: 0.875rem 2.25rem;
+    border-radius: 9999px;
+    font-weight: 700;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    box-shadow: 0 6px 20px 0 rgba(37, 211, 102, 0.4), 0 0 30px rgba(37, 211, 102, 0.15);
+    transition: background-color 0.12s ease, transform 0.12s ease, box-shadow 0.12s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-whatsapp-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.4s ease;
+}
+
+.btn-whatsapp-hero:hover {
+    background-color: var(--whatsapp-green-hover);
+    box-shadow: 0 8px 28px 0 rgba(37, 211, 102, 0.6), 0 0 40px rgba(37, 211, 102, 0.3);
+    transform: translateY(-3px) scale(1.05);
+}
+
+.btn-whatsapp-hero:hover::before {
+    left: 100%;
+}
+
+.btn-whatsapp-hero:active {
+    transform: translateY(-1px) scale(1.02);
+    transition: transform 0.05s ease;
+}
+
+.btn-whatsapp-hero:focus-visible {
+    outline: 3px solid var(--whatsapp-green-hover);
+    outline-offset: 4px;
+}
+
+/* Botón WhatsApp Card - Para cards de productos - Feedback inmediato */
+.btn-whatsapp-card {
+    background-color: var(--whatsapp-green);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    box-shadow: 0 4px 12px 0 rgba(37, 211, 102, 0.35);
+    transition: background-color 0.12s ease, transform 0.12s ease, box-shadow 0.12s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-whatsapp-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+    transition: left 0.4s ease;
+}
+
+.btn-whatsapp-card:hover {
+    background-color: var(--whatsapp-green-hover);
+    box-shadow: 0 6px 20px 0 rgba(37, 211, 102, 0.5), 0 0 16px rgba(37, 211, 102, 0.2);
+    transform: translateY(-2px) scale(1.03);
+}
+
+.btn-whatsapp-card:hover::before {
+    left: 100%;
+}
+
+.btn-whatsapp-card:active {
+    transform: translateY(0) scale(0.98);
+    transition: transform 0.05s ease;
+}
+
+.btn-whatsapp-card:focus-visible {
+    outline: 2px solid var(--whatsapp-green-hover);
+    outline-offset: 3px;
+}
+
+/* Botón WhatsApp Final - CTA final más contundente - Feedback inmediato */
+.btn-whatsapp-final {
+    background-color: var(--whatsapp-green);
+    color: white;
+    border-radius: 9999px;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    box-shadow: 0 8px 24px 0 rgba(37, 211, 102, 0.45), 0 0 40px rgba(37, 211, 102, 0.2);
+    transition: background-color 0.12s ease, transform 0.12s ease, box-shadow 0.12s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-whatsapp-final::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+    transition: left 0.4s ease;
+}
+
+.btn-whatsapp-final:hover {
+    background-color: var(--whatsapp-green-hover);
+    box-shadow: 0 12px 32px 0 rgba(37, 211, 102, 0.6), 0 0 50px rgba(37, 211, 102, 0.35);
+    transform: translateY(-4px) scale(1.06);
+}
+
+.btn-whatsapp-final:hover::before {
+    left: 100%;
+}
+
+.btn-whatsapp-final:active {
+    transform: translateY(-2px) scale(1.03);
+    transition: transform 0.05s ease;
+}
+
+.btn-whatsapp-final:focus-visible {
+    outline: 3px solid var(--whatsapp-green-hover);
+    outline-offset: 4px;
+}
+
+/* ============================================
+   CARDS
+   ============================================ */
+.card {
+    background-color: var(--bg-secondary);
+    border: 1px solid rgba(229, 231, 235, 0.1);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    border-color: rgba(236, 72, 153, 0.3);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+}
+
+/* ============================================
+   FORMULARIOS
+   ============================================ */
 .form-input,
 .form-textarea {
     width: 100%;
     padding: 0.75rem;
-    border: 1px solid #d1d5db;
+    border: 1px solid rgba(229, 231, 235, 0.2);
     border-radius: 0.5rem;
     font-size: 1rem;
-    transition: border-color 0.2s;
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    transition: all 0.2s ease;
 }
 
 .form-input:focus,
 .form-textarea:focus {
     outline: none;
-    border-color: #4f46e5;
-    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+    border-color: var(--accent-pink);
+    box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1);
+    background-color: var(--bg-primary);
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+    color: var(--text-secondary);
 }
 
 /* Badge styles for order status */
@@ -71,6 +412,320 @@
     cursor: pointer;
 }
 
+/* ============================================
+   ANIMACIONES REUTILIZABLES
+   ============================================ */
+
+/* Keyframes */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Clases de animación - Optimizadas para percepción de velocidad */
+.animate-fade-up {
+    animation: fadeUp 0.4s ease-out forwards;
+    opacity: 0;
+}
+
+.animate-scale-in {
+    animation: scaleIn 0.4s ease-out forwards;
+    opacity: 0;
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.4s ease-out forwards;
+    opacity: 0;
+}
+
+/* Stagger delays optimizados - Más rápidos y fluidos */
+.animate-stagger-1 {
+    animation-delay: 0.05s;
+}
+
+.animate-stagger-2 {
+    animation-delay: 0.1s;
+}
+
+.animate-stagger-3 {
+    animation-delay: 0.15s;
+}
+
+.animate-stagger-4 {
+    animation-delay: 0.2s;
+}
+
+.animate-stagger-5 {
+    animation-delay: 0.25s;
+}
+
+/* Hover mejorado para cards - Feedback inmediato */
+.hover-lift {
+    transition: transform 0.12s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.12s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-lift:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 12px 24px -6px rgba(0, 0, 0, 0.5), 0 8px 16px -4px rgba(236, 72, 153, 0.2);
+}
+
+.hover-lift:active {
+    transform: translateY(-2px) scale(1.01);
+    transition: transform 0.05s ease;
+}
+
+/* Glow sutil para links - Respuesta rápida */
+.hover-glow {
+    position: relative;
+    transition: text-shadow 0.12s ease;
+}
+
+.hover-glow:hover {
+    text-shadow: 0 0 8px rgba(236, 72, 153, 0.4);
+}
+
+.hover-glow::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-orange), var(--accent-pink), var(--accent-purple));
+    transition: width 0.3s ease;
+}
+
+.hover-glow:hover::after {
+    width: 100%;
+}
+
+/* Estilos de transición ya definidos en cada clase específica */
+
+/* Respetar prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .animate-fade-up,
+    .animate-scale-in,
+    .animate-fade-in {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* ============================================
+   MEJORAS DE ESPACIADO
+   ============================================ */
+section {
+    scroll-margin-top: 2rem;
+}
+
+/* ============================================
+   NAVBAR BUTTONS
+   ============================================ */
+
+/* Botón de navegación estándar (pill) */
+.nav-btn {
+    display: inline-block;
+    padding: 0.5rem 1.25rem;
+    border-radius: 9999px;
+    font-weight: 500;
+    font-size: 0.9375rem;
+    text-decoration: none;
+    color: var(--text-primary);
+    background-color: rgba(229, 231, 235, 0.08);
+    border: 1px solid rgba(229, 231, 235, 0.12);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(249, 115, 22, 0.1) 0%, rgba(236, 72, 153, 0.1) 50%, rgba(139, 92, 246, 0.1) 100%);
+    opacity: 0;
+    transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-btn:hover {
+    transform: scale(1.03);
+    background-color: rgba(236, 72, 153, 0.12);
+    border-color: rgba(236, 72, 153, 0.3);
+    box-shadow: 0 0 12px rgba(236, 72, 153, 0.2), 0 2px 4px rgba(0, 0, 0, 0.2);
+    color: var(--text-primary);
+}
+
+.nav-btn:hover::before {
+    opacity: 1;
+}
+
+.nav-btn:active {
+    transform: scale(0.98);
+}
+
+.nav-btn:focus-visible {
+    outline: 2px solid var(--accent-pink);
+    outline-offset: 3px;
+    border-radius: 9999px;
+}
+
+/* Botón CTA principal del navbar */
+.nav-btn-primary {
+    display: inline-block;
+    padding: 0.625rem 1.75rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    text-decoration: none;
+    color: white;
+    background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-pink) 50%, var(--accent-purple) 100%);
+    border: none;
+    box-shadow: 0 4px 14px 0 rgba(249, 115, 22, 0.35), 0 0 20px rgba(236, 72, 153, 0.15);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-btn-primary::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.nav-btn-primary:hover {
+    transform: scale(1.05) translateY(-1px);
+    box-shadow: 0 6px 24px 0 rgba(249, 115, 22, 0.45), 0 0 30px rgba(236, 72, 153, 0.25);
+}
+
+.nav-btn-primary:hover::after {
+    left: 100%;
+}
+
+.nav-btn-primary:active {
+    transform: scale(1.02) translateY(0);
+}
+
+.nav-btn-primary:focus-visible {
+    outline: 2px solid var(--accent-pink);
+    outline-offset: 3px;
+    border-radius: 9999px;
+}
+
+/* ============================================
+   FOOTER LINKS
+   ============================================ */
+
+.footer-link {
+    display: inline-block;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    padding: 0.25rem 0;
+}
+
+.footer-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-orange), var(--accent-pink), var(--accent-purple));
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.footer-link:hover {
+    color: var(--accent-pink);
+    text-shadow: 0 0 8px rgba(236, 72, 153, 0.3);
+    transform: translateY(-1px);
+}
+
+.footer-link:hover::after {
+    width: 100%;
+}
+
+.footer-link:focus-visible {
+    outline: 2px solid var(--accent-pink);
+    outline-offset: 2px;
+    border-radius: 0.25rem;
+    color: var(--accent-pink);
+}
+
+/* Footer social links (Instagram y WhatsApp) */
+.footer-social-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.footer-social-link:hover {
+    transform: scale(1.05) translateY(-1px);
+    background-color: rgba(236, 72, 153, 0.08);
+}
+
+.footer-social-link:hover .footer-social-icon {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 6px currentColor);
+}
+
+.footer-social-link:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+    border-radius: 0.5rem;
+}
+
+.footer-social-icon {
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 /* Mobile optimizations */
 @media (max-width: 640px) {
     .text-4xl {
@@ -79,6 +734,118 @@
     
     .text-6xl {
         font-size: 3rem;
+    }
+    
+    /* Animaciones más suaves en mobile */
+    .animate-fade-up,
+    .animate-scale-in,
+    .animate-fade-in {
+        animation-duration: 0.4s;
+    }
+    
+    /* Navbar buttons más compactos en mobile */
+    .nav-btn {
+        padding: 0.4rem 1rem;
+        font-size: 0.875rem;
+    }
+    
+    .nav-btn-primary {
+        padding: 0.5rem 1.25rem;
+        font-size: 0.875rem;
+    }
+}
+
+/* ============================================
+   ACCESIBILIDAD Y REDUCED MOTION
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
+    
+    .animate-fade-up,
+    .animate-scale-in,
+    .animate-fade-in {
+        opacity: 1;
+        transform: none;
+    }
+    
+    .nav-btn:hover,
+    .nav-btn-primary:hover,
+    .footer-link:hover,
+    .footer-social-link:hover {
+        transform: none !important;
+    }
+    
+    .nav-btn-primary::after {
+        display: none;
+    }
+}
+
+/* ============================================
+   MOBILE OPTIMIZATIONS
+   ============================================ */
+@media (max-width: 640px) {
+    /* Botones con área táctil cómoda (mínimo 48px) */
+    .btn-whatsapp-hero,
+    .btn-whatsapp-card,
+    .btn-secondary {
+        min-height: 48px;
+        transition-duration: 0.2s;
+    }
+    
+    .btn-whatsapp-final {
+        min-height: 52px;
+        transition-duration: 0.2s;
+    }
+    
+    /* Padding vertical específico para mobile */
+    .btn-whatsapp-hero {
+        padding-top: 0.875rem;
+        padding-bottom: 0.875rem;
+    }
+    
+    .btn-whatsapp-card {
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+    }
+    
+    .btn-whatsapp-final {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+    
+    .btn-secondary {
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+    }
+    
+    /* Transiciones más rápidas en mobile para mejor feedback */
+    .btn-whatsapp,
+    .btn-whatsapp-hero,
+    .btn-whatsapp-card,
+    .btn-whatsapp-final,
+    .btn-primary,
+    .btn-secondary {
+        transition-duration: 0.12s;
+    }
+    
+    .btn-whatsapp::before,
+    .btn-whatsapp-hero::before,
+    .btn-whatsapp-card::before,
+    .btn-whatsapp-final::before {
+        transition-duration: 0.25s;
+    }
+    
+    .hover-lift {
+        transition-duration: 0.12s;
+    }
+    
+    .hover-glow {
+        transition-duration: 0.12s;
     }
 }
 

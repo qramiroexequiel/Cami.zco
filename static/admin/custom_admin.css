@@ -1,0 +1,611 @@
+/* ============================================
+   ADMIN THEME - Premium Dark Theme
+   ============================================ */
+
+/* Variables del theme base */
+:root {
+    --bg-primary: #0F172A;
+    --bg-secondary: #020617;
+    --text-primary: #E5E7EB;
+    --text-secondary: #9CA3AF;
+    --accent-orange: #F97316;
+    --accent-pink: #EC4899;
+    --accent-purple: #8B5CF6;
+    --whatsapp-green: #25D366;
+}
+
+/* ============================================
+   BODY Y CONTENEDOR PRINCIPAL
+   ============================================ */
+body {
+    background-color: var(--bg-primary) !important;
+    color: var(--text-primary) !important;
+}
+
+#container {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+/* ============================================
+   HEADER Y NAVEGACIÓN
+   ============================================ */
+#header {
+    background: var(--bg-secondary) !important;
+    border-bottom: 1px solid rgba(229, 231, 235, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+#branding h1,
+#branding h1 a:link,
+#branding h1 a:visited {
+    color: var(--text-primary) !important;
+}
+
+#user-tools {
+    color: var(--text-secondary);
+}
+
+#user-tools a:link,
+#user-tools a:visited {
+    color: var(--text-primary) !important;
+}
+
+#user-tools a:hover {
+    color: var(--accent-pink) !important;
+}
+
+/* ============================================
+   CONTENT Y MAIN
+   ============================================ */
+#content {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+#content-main {
+    background-color: var(--bg-primary);
+}
+
+.module {
+    background-color: var(--bg-secondary) !important;
+    border: 1px solid rgba(229, 231, 235, 0.1) !important;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.module h2,
+.module caption,
+.inline-group h2 {
+    background: linear-gradient(135deg, rgba(249, 115, 22, 0.1) 0%, rgba(236, 72, 153, 0.1) 50%, rgba(139, 92, 246, 0.1) 100%) !important;
+    border-bottom: 1px solid rgba(229, 231, 235, 0.1);
+    color: var(--text-primary) !important;
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+}
+
+/* ============================================
+   FIELDSETS Y FORMULARIOS
+   ============================================ */
+fieldset {
+    background-color: var(--bg-secondary) !important;
+    border: 1px solid rgba(229, 231, 235, 0.1) !important;
+    border-radius: 0.5rem;
+    margin-bottom: 1.5rem;
+    padding: 1.5rem;
+}
+
+fieldset.module {
+    background-color: var(--bg-secondary) !important;
+}
+
+fieldset h2 {
+    background: transparent !important;
+    border-bottom: 1px solid rgba(229, 231, 235, 0.1);
+    color: var(--text-primary) !important;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+fieldset.collapse {
+    border: 1px solid rgba(229, 231, 235, 0.1);
+}
+
+fieldset.collapse h2 {
+    background: rgba(236, 72, 153, 0.05) !important;
+    border-bottom: none;
+}
+
+/* ============================================
+   LABELS Y TEXTOS
+   ============================================ */
+label {
+    color: var(--text-primary) !important;
+    font-weight: 500;
+}
+
+.help,
+.help-block,
+p.help,
+.helptext {
+    color: #B4BCC8 !important;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin-top: 0.25rem;
+}
+
+.description {
+    color: #B4BCC8 !important;
+    font-size: 0.875rem;
+    line-height: 1.5;
+}
+
+/* Errores con mejor contraste */
+.errornote,
+.errorlist,
+ul.errorlist li {
+    background-color: rgba(239, 68, 68, 0.15) !important;
+    border: 1px solid #ef4444 !important;
+    border-left: 4px solid #ef4444 !important;
+    color: #FCA5A5 !important;
+    padding: 0.75rem 1rem !important;
+    border-radius: 0.375rem !important;
+    font-weight: 500 !important;
+    margin-bottom: 1rem !important;
+}
+
+.errors {
+    background-color: rgba(239, 68, 68, 0.1) !important;
+    border: 1px solid rgba(239, 68, 68, 0.3) !important;
+    border-radius: 0.375rem !important;
+    padding: 0.75rem !important;
+}
+
+.errors label {
+    color: #FCA5A5 !important;
+}
+
+.errors input,
+.errors textarea,
+.errors select {
+    border-color: #ef4444 !important;
+    background-color: rgba(239, 68, 68, 0.05) !important;
+}
+
+/* ============================================
+   INPUTS Y FORMULARIOS
+   ============================================ */
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="url"],
+input[type="number"],
+input[type="date"],
+input[type="datetime-local"],
+input[type="time"],
+textarea,
+select {
+    background-color: var(--bg-secondary) !important;
+    border: 1px solid rgba(229, 231, 235, 0.2) !important;
+    color: var(--text-primary) !important;
+    border-radius: 0.375rem;
+    padding: 0.5rem 0.75rem;
+    transition: all 0.2s ease;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="number"]:focus,
+input[type="date"]:focus,
+input[type="datetime-local"]:focus,
+input[type="time"]:focus,
+textarea:focus,
+select:focus {
+    outline: none !important;
+    border-color: var(--accent-pink) !important;
+    box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1) !important;
+    background-color: var(--bg-primary) !important;
+}
+
+input[type="text"]:focus-visible,
+input[type="password"]:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+    outline: 2px solid var(--accent-pink) !important;
+    outline-offset: 2px !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #6B7280 !important;
+    opacity: 0.8 !important;
+}
+
+/* Inputs disabled y readonly */
+input:disabled,
+textarea:disabled,
+select:disabled,
+input[readonly],
+textarea[readonly] {
+    background-color: rgba(2, 6, 23, 0.5) !important;
+    color: #6B7280 !important;
+    cursor: not-allowed !important;
+    opacity: 0.6 !important;
+}
+
+/* File input */
+input[type="file"] {
+    background-color: var(--bg-secondary) !important;
+    border: 1px dashed rgba(229, 231, 235, 0.3) !important;
+    color: var(--text-primary) !important;
+    padding: 0.75rem !important;
+    border-radius: 0.375rem !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+}
+
+input[type="file"]:hover {
+    border-color: var(--accent-pink) !important;
+    background-color: rgba(236, 72, 153, 0.05) !important;
+}
+
+input[type="file"]:focus {
+    border-color: var(--accent-pink) !important;
+    box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1) !important;
+}
+
+/* ============================================
+   CHECKBOXES Y RADIOS
+   ============================================ */
+input[type="checkbox"],
+input[type="radio"] {
+    accent-color: var(--accent-pink);
+    width: 1.25rem;
+    height: 1.25rem;
+    cursor: pointer;
+}
+
+input[type="checkbox"]:focus,
+input[type="radio"]:focus {
+    outline: 2px solid var(--accent-pink);
+    outline-offset: 2px;
+}
+
+/* ============================================
+   BOTONES
+   ============================================ */
+.button,
+input[type="submit"],
+input[type="button"],
+.submit-row input,
+a.button {
+    background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-pink) 50%, var(--accent-purple) 100%) !important;
+    border: none !important;
+    color: white !important;
+    padding: 0.5rem 1.5rem !important;
+    border-radius: 9999px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    transition: all 0.25s ease !important;
+    box-shadow: 0 2px 4px rgba(236, 72, 153, 0.2) !important;
+}
+
+.button:hover,
+input[type="submit"]:hover,
+input[type="button"]:hover,
+.submit-row input:hover,
+a.button:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3) !important;
+}
+
+.button:active,
+input[type="submit"]:active,
+input[type="button"]:active {
+    transform: translateY(0) !important;
+}
+
+.button:focus-visible,
+input[type="submit"]:focus-visible,
+input[type="button"]:focus-visible {
+    outline: 2px solid var(--accent-pink) !important;
+    outline-offset: 3px !important;
+}
+
+/* Botón secundario (default) */
+.button.default,
+input[type="submit"].default {
+    background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-pink) 50%, var(--accent-purple) 100%) !important;
+}
+
+/* Botón de eliminar (delete) */
+.deletelink,
+.deletelink-box a {
+    background-color: #dc2626 !important;
+    color: white !important;
+    border: none !important;
+    padding: 0.5rem 1.5rem !important;
+    border-radius: 9999px !important;
+    font-weight: 600 !important;
+    transition: all 0.25s ease !important;
+}
+
+.deletelink:hover,
+.deletelink-box a:hover {
+    background-color: #b91c1c !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3) !important;
+}
+
+/* Botones de acción */
+.object-tools a {
+    background: var(--bg-secondary) !important;
+    border: 1px solid rgba(229, 231, 235, 0.2) !important;
+    color: var(--text-primary) !important;
+    padding: 0.5rem 1rem !important;
+    border-radius: 0.375rem !important;
+    transition: all 0.2s ease !important;
+}
+
+.object-tools a:hover {
+    background: rgba(236, 72, 153, 0.1) !important;
+    border-color: var(--accent-pink) !important;
+    color: var(--accent-pink) !important;
+}
+
+/* ============================================
+   TABLAS Y LISTAS
+   ============================================ */
+#result_list {
+    background-color: var(--bg-secondary) !important;
+    border: 1px solid rgba(229, 231, 235, 0.1) !important;
+    border-radius: 0.5rem;
+}
+
+#result_list thead th {
+    background: rgba(236, 72, 153, 0.05) !important;
+    color: var(--text-primary) !important;
+    border-bottom: 1px solid rgba(229, 231, 235, 0.1) !important;
+    font-weight: 600;
+}
+
+#result_list tbody tr {
+    border-bottom: 1px solid rgba(229, 231, 235, 0.05);
+}
+
+#result_list tbody tr {
+    transition: background-color 0.15s ease;
+}
+
+#result_list tbody tr:hover {
+    background-color: rgba(236, 72, 153, 0.08) !important;
+}
+
+#result_list tbody tr.selected {
+    background-color: rgba(236, 72, 153, 0.12) !important;
+}
+
+#result_list tbody tr.selected:hover {
+    background-color: rgba(236, 72, 153, 0.15) !important;
+}
+
+#result_list tbody td {
+    color: var(--text-primary) !important;
+    border-bottom: 1px solid rgba(229, 231, 235, 0.05) !important;
+    padding: 0.75rem 1rem !important;
+}
+
+#result_list thead th {
+    padding: 0.75rem 1rem !important;
+    border-right: 1px solid rgba(229, 231, 235, 0.05) !important;
+}
+
+#result_list tbody a {
+    color: var(--accent-pink) !important;
+    text-decoration: none !important;
+    transition: all 0.2s ease !important;
+}
+
+#result_list tbody a:hover {
+    color: var(--accent-orange) !important;
+    text-shadow: 0 0 4px rgba(236, 72, 153, 0.3) !important;
+}
+
+/* ============================================
+   FILTROS Y SIDEBAR
+   ============================================ */
+#changelist-filter {
+    background-color: var(--bg-secondary) !important;
+    border: 1px solid rgba(229, 231, 235, 0.1) !important;
+    border-radius: 0.5rem;
+}
+
+#changelist-filter h2 {
+    background: transparent !important;
+    border-bottom: 1px solid rgba(229, 231, 235, 0.1);
+    color: var(--text-primary) !important;
+}
+
+#changelist-filter h3 {
+    color: var(--text-primary) !important;
+}
+
+#changelist-filter li {
+    color: var(--text-secondary) !important;
+}
+
+#changelist-filter li.selected a {
+    color: var(--accent-pink) !important;
+    font-weight: 600;
+}
+
+#changelist-filter a {
+    color: var(--text-secondary) !important;
+}
+
+#changelist-filter a:hover {
+    color: var(--accent-pink) !important;
+}
+
+/* ============================================
+   MENSAJES Y ALERTAS
+   ============================================ */
+.messagelist li {
+    background-color: var(--bg-secondary) !important;
+    border: 1px solid rgba(229, 231, 235, 0.1) !important;
+    border-radius: 0.375rem;
+    color: var(--text-primary) !important;
+}
+
+.messagelist li.success {
+    border-left: 4px solid #10b981 !important;
+    background-color: rgba(16, 185, 129, 0.1) !important;
+}
+
+.messagelist li.error {
+    border-left: 4px solid #ef4444 !important;
+    background-color: rgba(239, 68, 68, 0.1) !important;
+}
+
+.messagelist li.warning {
+    border-left: 4px solid #f59e0b !important;
+    background-color: rgba(245, 158, 11, 0.1) !important;
+}
+
+.messagelist li.info {
+    border-left: 4px solid var(--accent-pink) !important;
+    background-color: rgba(236, 72, 153, 0.1) !important;
+}
+
+/* ============================================
+   INLINES (TabularInline, StackedInline)
+   ============================================ */
+.inline-group {
+    background-color: var(--bg-secondary) !important;
+    border: 1px solid rgba(229, 231, 235, 0.1) !important;
+    border-radius: 0.5rem;
+}
+
+.inline-group .tabular {
+    background-color: var(--bg-secondary) !important;
+}
+
+.inline-group thead th {
+    background: rgba(236, 72, 153, 0.05) !important;
+    color: var(--text-primary) !important;
+    border-bottom: 1px solid rgba(229, 231, 235, 0.1) !important;
+}
+
+.inline-group tbody tr {
+    border-bottom: 1px solid rgba(229, 231, 235, 0.05);
+}
+
+.inline-group tbody tr:hover {
+    background-color: rgba(236, 72, 153, 0.05) !important;
+}
+
+/* ============================================
+   PAGINACIÓN
+   ============================================ */
+.paginator {
+    color: var(--text-secondary) !important;
+}
+
+.paginator a {
+    color: var(--accent-pink) !important;
+    background-color: var(--bg-secondary) !important;
+    border: 1px solid rgba(229, 231, 235, 0.2) !important;
+    border-radius: 0.375rem;
+    padding: 0.5rem 0.75rem;
+    transition: all 0.2s ease;
+}
+
+.paginator a:hover {
+    background-color: rgba(236, 72, 153, 0.1) !important;
+    border-color: var(--accent-pink) !important;
+}
+
+.paginator .this-page {
+    background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-pink) 50%, var(--accent-purple) 100%) !important;
+    color: white !important;
+    border: none !important;
+}
+
+/* ============================================
+   BREADCRUMBS
+   ============================================ */
+.breadcrumbs {
+    background-color: var(--bg-secondary) !important;
+    border-bottom: 1px solid rgba(229, 231, 235, 0.1) !important;
+    padding: 0.75rem 1rem !important;
+    margin-bottom: 1rem !important;
+    border-radius: 0.375rem 0.375rem 0 0 !important;
+}
+
+.breadcrumbs a {
+    color: var(--accent-pink) !important;
+    text-decoration: none !important;
+    transition: all 0.2s ease !important;
+}
+
+.breadcrumbs a:hover {
+    color: var(--accent-orange) !important;
+    text-shadow: 0 0 4px rgba(236, 72, 153, 0.3) !important;
+}
+
+.breadcrumbs a:focus-visible {
+    outline: 2px solid var(--accent-pink) !important;
+    outline-offset: 2px !important;
+    border-radius: 0.25rem !important;
+}
+
+/* Links generales con hover-glow sutil */
+a:link,
+a:visited {
+    color: var(--accent-pink) !important;
+    text-decoration: none !important;
+    transition: all 0.2s ease !important;
+}
+
+a:hover {
+    color: var(--accent-orange) !important;
+    text-shadow: 0 0 3px rgba(236, 72, 153, 0.2) !important;
+}
+
+a:focus-visible {
+    outline: 2px solid var(--accent-pink) !important;
+    outline-offset: 2px !important;
+    border-radius: 0.25rem !important;
+}
+
+/* ============================================
+   ACCESIBILIDAD Y REDUCED MOTION
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 768px) {
+    #header {
+        padding: 0.5rem 1rem;
+    }
+    
+    #content {
+        padding: 1rem;
+    }
+    
+    fieldset {
+        padding: 1rem;
+    }
+}
+

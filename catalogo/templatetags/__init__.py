@@ -1,0 +1,2 @@
+# Template tags para catálogo
+

@@ -2,25 +2,25 @@
 {% load static %}
 
 {% block extra_css %}
-<style>
-    .dashboard-nav {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    }
-</style>
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 {% endblock %}
 
 {% block content %}
-<div class="min-h-screen bg-gray-50">
+<div class="min-h-screen" style="background-color: #0F172A;">
     <!-- Navbar del Dashboard -->
-    <nav class="dashboard-nav text-white shadow-lg">
+    <nav class="shadow-lg" style="background-color: #020617; border-bottom: 1px solid rgba(229, 231, 235, 0.1);">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center space-x-4">
-                    <a href="{% url 'dashboard:index' %}" class="text-2xl font-bold">Administración cami.zco</a>
+                    <a href="{% url 'dashboard:index' %}" class="text-2xl font-bold hover-glow" style="color: #E5E7EB;">
+                        <span style="background: linear-gradient(135deg, #F97316 0%, #EC4899 50%, #8B5CF6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">cami.zco</span>
+                        <span style="color: #9CA3AF; font-weight: 400;">Admin</span>
+                    </a>
                 </div>
                 <div class="flex items-center space-x-4">
-                    <a href="{% url 'home' %}" class="hover:opacity-80 transition">Ver sitio</a>
-                    <a href="{% url 'logout' %}" class="bg-white bg-opacity-20 px-4 py-2 rounded-lg hover:bg-opacity-30 transition">
+                    <a href="{% url 'home' %}" class="hover-glow transition" style="color: #E5E7EB;">Ver sitio</a>
+                    <a href="{% url 'admin:index' %}" class="hover-glow transition" style="color: #E5E7EB;">Admin Django</a>
+                    <a href="{% url 'logout' %}" class="btn-secondary text-sm">
                         Salir
                     </a>
                 </div>
@@ -32,15 +32,17 @@
     {% if messages %}
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
         {% for message in messages %}
-        <div class="{% if message.tags == 'error' %}bg-red-100 border-red-400 text-red-700{% elif message.tags == 'warning' %}bg-yellow-100 border-yellow-400 text-yellow-700{% elif message.tags == 'success' %}bg-green-100 border-green-400 text-green-700{% else %}bg-blue-100 border-blue-400 text-blue-700{% endif %} border px-4 py-3 rounded mb-4" role="alert">
-            {{ message }}
+        <div class="card mb-4 border-l-4 {% if message.tags == 'error' %}border-red-500{% elif message.tags == 'warning' %}border-yellow-500{% elif message.tags == 'success' %}border-green-500{% else %}border-[#EC4899]{% endif %}" 
+             style="background-color: {% if message.tags == 'error' %}rgba(239, 68, 68, 0.1){% elif message.tags == 'warning' %}rgba(245, 158, 11, 0.1){% elif message.tags == 'success' %}rgba(16, 185, 129, 0.1){% else %}rgba(236, 72, 153, 0.1){% endif %};"
+             role="alert">
+            <p style="color: #E5E7EB;">{{ message }}</p>
         </div>
         {% endfor %}
     </div>
     {% endif %}
 
     <!-- Contenido del Dashboard -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         {% block dashboard_content %}{% endblock %}
     </div>
 </div>

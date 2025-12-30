@@ -10,22 +10,17 @@ from .models import (
 
 def home(request):
     """Vista de la landing page"""
-    # Obtener productos destacados (máximo 6) con optimización de queries
     productos_destacados = Producto.objects.filter(
         activo=True, 
         destacado=True
     ).select_related('categoria').prefetch_related('imagenes')[:6]
     
-    # Detectar si hay más de 6 destacados
     total_destacados = Producto.objects.filter(activo=True, destacado=True).count()
     hay_mas_destacados = total_destacados > 6
     
     categorias = Categoria.objects.filter(activa=True)
-    
-    # Hero
     hero = HeroHome.objects.filter(activo=True).first()
     
-    # Sección "Nuestro Trabajo"
     seccion_nuestro_trabajo = SeccionHome.objects.filter(
         tipo='nuestro_trabajo',
         activa=True
@@ -36,24 +31,16 @@ def home(request):
         )
     ).first()
     
-    # Pasos del proceso
     pasos = PasoProceso.objects.filter(activo=True).order_by('orden', 'numero')[:3]
-    
-    # Galería de trabajos (máximo 9 en home)
     galeria = GaleriaTrabajo.objects.filter(activa=True).order_by('orden', '-fecha_creacion')[:9]
     
-    # Detectar si hay más de 9 trabajos
     total_trabajos = GaleriaTrabajo.objects.filter(activa=True).count()
     hay_mas_trabajos = total_trabajos > 9
     
-    # FAQ (máximo 6 en home)
     faqs = PreguntaFrecuente.objects.filter(activa=True).order_by('orden')[:6]
-    
-    # Detectar si hay más de 6 FAQs
     total_faqs = PreguntaFrecuente.objects.filter(activa=True).count()
     hay_mas_faqs = total_faqs > 6
     
-    # CTA Final
     cta_final = CTAFinal.objects.filter(activo=True).first()
     
     context = {
@@ -104,30 +91,23 @@ class ProductoDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # Productos relacionados de la misma categoría
         if self.object.categoria:
             context['productos_relacionados'] = Producto.objects.filter(
                 activo=True,
                 categoria=self.object.categoria
             ).exclude(id=self.object.id)[:4]
         
-        # Configuración de WhatsApp para consulta rápida
         from pedidos.models import ConfiguracionPedido
         config = ConfiguracionPedido.objects.filter(activo=True).first()
         
         if config:
-            # Generar URL absoluta del producto
             url_producto = self.request.build_absolute_uri(self.object.get_absolute_url())
-            # Generar mensaje de WhatsApp
             mensaje = self.object.get_mensaje_whatsapp_consulta(url_producto)
-            # Codificar mensaje para URL
             mensaje_codificado = quote(mensaje)
-            # Construir URL de WhatsApp
             whatsapp_url = f"https://wa.me/{config.whatsapp_destino}?text={mensaje_codificado}"
             context['whatsapp_url'] = whatsapp_url
             context['config_whatsapp'] = config
         
-        # Datos SEO
         context['seo_title'] = self.object.get_seo_title()
         context['seo_description'] = self.object.get_seo_description()
         context['og_image_url'] = self.object.get_og_image_url(self.request)

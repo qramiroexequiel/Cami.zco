@@ -3,14 +3,14 @@
 {% block title %}Pedidos - Panel de Administración{% endblock %}
 
 {% block dashboard_content %}
-<div class="mb-6">
-    <h1 class="text-3xl font-bold text-gray-900">Pedidos</h1>
+<div class="mb-6 md:mb-8 animate-fade-up">
+    <h1 class="text-3xl font-bold" style="color: #E5E7EB;">Pedidos</h1>
 </div>
 
 <!-- Filtro por estado -->
-<div class="bg-white rounded-lg shadow-md p-4 mb-6">
+<div class="card p-4 mb-6 animate-fade-up animate-stagger-1">
     <form method="get" class="flex items-center space-x-4">
-        <label class="text-sm font-medium text-gray-700">Filtrar por estado:</label>
+        <label class="text-sm font-medium" style="color: #E5E7EB;">Filtrar por estado:</label>
         <select name="estado" onchange="this.form.submit()" class="form-input">
             <option value="">Todos</option>
             {% for estado_val, estado_label in estados %}
@@ -22,38 +22,39 @@
     </form>
 </div>
 
-<div class="bg-white rounded-lg shadow-md overflow-hidden">
+<div class="card overflow-hidden animate-fade-up animate-stagger-2">
     <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-gray-50">
-                <tr>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Cliente</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Producto</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Cantidad</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Fecha</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Estado</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Acciones</th>
+        <table class="min-w-full" style="border-collapse: separate; border-spacing: 0;">
+            <thead>
+                <tr style="background: rgba(236, 72, 153, 0.08); border-bottom: 2px solid rgba(229, 231, 235, 0.1);">
+                    <th class="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider" style="color: #E5E7EB;">Cliente</th>
+                    <th class="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider" style="color: #E5E7EB;">Producto</th>
+                    <th class="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider" style="color: #E5E7EB;">Cantidad</th>
+                    <th class="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider" style="color: #E5E7EB;">Fecha</th>
+                    <th class="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider" style="color: #E5E7EB;">Estado</th>
+                    <th class="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider" style="color: #E5E7EB;">Acciones</th>
                 </tr>
             </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
+            <tbody>
                 {% for pedido in pedidos %}
-                <tr>
+                <tr class="hover:bg-[rgba(236,72,153,0.08)] transition-colors duration-150" style="border-bottom: 1px solid rgba(229, 231, 235, 0.08);">
                     <td class="px-6 py-4">
-                        <div class="text-sm font-medium text-gray-900">{{ pedido.nombre }}</div>
-                        <div class="text-sm text-gray-500">{{ pedido.whatsapp }}</div>
+                        <div class="text-sm font-medium" style="color: #E5E7EB;">{{ pedido.nombre }}</div>
+                        <div class="text-sm" style="color: #9CA3AF;">{{ pedido.whatsapp }}</div>
                     </td>
-                    <td class="px-6 py-4 text-sm text-gray-900">{{ pedido.producto.titulo|default:"Personalizado" }}</td>
-                    <td class="px-6 py-4 text-sm text-gray-900">{{ pedido.cantidad }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ pedido.fecha_creacion|date:"d/m/Y" }}</td>
+                    <td class="px-6 py-4 text-sm" style="color: #E5E7EB;">{{ pedido.producto.titulo|default:"Personalizado" }}</td>
+                    <td class="px-6 py-4 text-sm" style="color: #E5E7EB;">{{ pedido.cantidad }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm" style="color: #9CA3AF;">{{ pedido.fecha_creacion|date:"d/m/Y" }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <form method="post" action="{% url 'dashboard:pedido_actualizar_estado' pedido.id %}" class="inline">
                             {% csrf_token %}
-                            <select name="estado" onchange="this.form.submit()" class="text-xs font-semibold rounded-full px-3 py-1 border-0
-                                {% if pedido.estado == 'nuevo' %}bg-blue-100 text-blue-800
-                                {% elif pedido.estado == 'confirmado' %}bg-yellow-100 text-yellow-800
-                                {% elif pedido.estado == 'en_produccion' %}bg-pink-100 text-pink-800
-                                {% elif pedido.estado == 'listo' %}bg-green-100 text-green-800
-                                {% else %}bg-gray-100 text-gray-800{% endif %}">
+                            <select name="estado" onchange="this.form.submit()" class="text-xs font-semibold rounded-full px-3 py-1.5 border transition-all duration-200
+                                {% if pedido.estado == 'nuevo' %}bg-blue-500/25 text-blue-300 border-blue-500/30
+                                {% elif pedido.estado == 'confirmado' %}bg-yellow-500/25 text-yellow-300 border-yellow-500/30
+                                {% elif pedido.estado == 'en_produccion' %}bg-pink-500/25 text-pink-300 border-pink-500/30
+                                {% elif pedido.estado == 'listo' %}bg-green-500/25 text-green-300 border-green-500/30
+                                {% else %}bg-gray-500/25 text-gray-400 border-gray-500/30{% endif %}"
+                                style="background-color: #020617;">
                                 {% for estado_val, estado_label in estados %}
                                 <option value="{{ estado_val }}" {% if pedido.estado == estado_val %}selected{% endif %}>
                                     {{ estado_label }}
@@ -63,7 +64,7 @@
                         </form>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                        <button onclick="mostrarDetalles({{ pedido.id }})" class="text-indigo-600 hover:text-indigo-900 mr-4">
+                        <button onclick="mostrarDetalles({{ pedido.id }})" class="hover-glow transition-all duration-200" style="color: #EC4899;">
                             Ver
                         </button>
                     </td>
@@ -71,37 +72,37 @@
                 
                 <!-- Detalles del pedido (oculto por defecto) -->
                 <tr id="detalles-{{ pedido.id }}" class="hidden">
-                    <td colspan="6" class="px-6 py-4 bg-gray-50">
+                    <td colspan="6" class="px-6 py-4" style="background-color: rgba(236, 72, 153, 0.05);">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <h4 class="font-semibold mb-2">Información del pedido</h4>
-                                <p class="text-sm"><strong>Texto a grabar:</strong> {{ pedido.texto_tallar|default:"No especificado" }}</p>
-                                <p class="text-sm"><strong>Entrega:</strong> {{ pedido.get_entrega_display }}{% if pedido.zona_ciudad %} - {{ pedido.zona_ciudad }}{% endif %}</p>
+                                <h4 class="font-semibold mb-2" style="color: #E5E7EB;">Información del pedido</h4>
+                                <p class="text-sm" style="color: #9CA3AF;"><strong style="color: #E5E7EB;">Texto a grabar:</strong> {{ pedido.texto_tallar|default:"No especificado" }}</p>
+                                <p class="text-sm" style="color: #9CA3AF;"><strong style="color: #E5E7EB;">Entrega:</strong> {{ pedido.get_entrega_display }}{% if pedido.zona_ciudad %} - {{ pedido.zona_ciudad }}{% endif %}</p>
                                 {% if pedido.fecha_para_cuando %}
-                                <p class="text-sm"><strong>Para cuándo:</strong> {{ pedido.fecha_para_cuando|date:"d/m/Y" }}</p>
+                                <p class="text-sm" style="color: #9CA3AF;"><strong style="color: #E5E7EB;">Para cuándo:</strong> {{ pedido.fecha_para_cuando|date:"d/m/Y" }}</p>
                                 {% endif %}
                                 {% if pedido.notas %}
-                                <p class="text-sm"><strong>Notas del cliente:</strong> {{ pedido.notas }}</p>
+                                <p class="text-sm" style="color: #9CA3AF;"><strong style="color: #E5E7EB;">Notas del cliente:</strong> {{ pedido.notas }}</p>
                                 {% endif %}
                             </div>
                             <div>
-                                <h4 class="font-semibold mb-2">Notas internas</h4>
+                                <h4 class="font-semibold mb-2" style="color: #E5E7EB;">Notas internas</h4>
                                 <form method="post" action="{% url 'dashboard:pedido_actualizar_notas' pedido.id %}">
                                     {% csrf_token %}
                                     <textarea name="notas_internas" rows="3" class="form-textarea w-full">{{ pedido.notas_internas }}</textarea>
-                                    <button type="submit" class="mt-2 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition text-sm">
+                                    <button type="submit" class="mt-2 btn-primary text-sm">
                                         Guardar notas
                                     </button>
                                 </form>
                                 <div class="mt-4 space-y-2">
                                     <button onclick="copiarMensajeWhatsApp('{{ pedido.nombre }}', '{{ pedido.producto.titulo|default:"Personalizado" }}')" 
-                                            class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition text-sm w-full">
+                                            class="btn-whatsapp w-full text-sm">
                                         📋 Copiar mensaje WhatsApp
                                     </button>
                                     <a href="https://wa.me/{{ whatsapp_destino }}?text={{ pedido.get_mensaje_whatsapp }}" 
                                        target="_blank" 
                                        rel="noopener noreferrer"
-                                       class="block bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition text-sm text-center">
+                                       class="block btn-whatsapp text-sm text-center">
                                         💬 Abrir WhatsApp
                                     </a>
                                 </div>
@@ -111,7 +112,7 @@
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="6" class="px-6 py-8 text-center text-gray-500">
+                    <td colspan="6" class="px-6 py-8 text-center" style="color: #9CA3AF;">
                         No hay pedidos aún.
                     </td>
                 </tr>

@@ -49,7 +49,6 @@ class Producto(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.titulo)
-        # Actualizar fecha_actualizacion solo si el objeto ya existe
         if self.pk:
             self.fecha_actualizacion = timezone.now()
         super().save(*args, **kwargs)
@@ -79,17 +78,12 @@ class Producto(models.Model):
     
     def get_seo_description(self):
         """Genera la meta description SEO para el producto"""
-        # Si tiene descripción, usar una versión resumida (máximo 155 caracteres)
         if self.descripcion:
             descripcion_limpia = self.descripcion.strip()
-            # Remover saltos de línea y espacios múltiples
             descripcion_limpia = ' '.join(descripcion_limpia.split())
-            # Limitar a 155 caracteres (recomendado para SEO)
             if len(descripcion_limpia) > 155:
                 descripcion_limpia = descripcion_limpia[:152] + "..."
             return descripcion_limpia
-        
-        # Fallback: texto base según categoría
         tipo_producto = "vaso o copa"
         if self.categoria:
             nombre_categoria = self.categoria.nombre.lower()
@@ -315,6 +309,21 @@ class ConfiguracionSitio(models.Model):
     notas_internas_pedidos = models.BooleanField(
         default=True,
         help_text="Mostrar campo de notas internas en pedidos"
+    )
+    instagram_url = models.URLField(
+        blank=True,
+        help_text="URL completa de Instagram (ej: https://instagram.com/cami.zco)"
+    )
+    whatsapp_numero = models.CharField(
+        max_length=20,
+        blank=True,
+        help_text="Número de WhatsApp solo con números (ej: 5491155947837)"
+    )
+    whatsapp_mensaje = models.CharField(
+        max_length=200,
+        blank=True,
+        default="Hola! Quiero hacer un pedido 😊",
+        help_text="Mensaje predefinido para WhatsApp"
     )
 
     class Meta:

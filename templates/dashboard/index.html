@@ -3,49 +3,49 @@
 {% block title %}Panel cami.zco{% endblock %}
 
 {% block dashboard_content %}
-<div class="mb-8">
-    <h1 class="text-3xl font-bold text-gray-900 mb-2">Hola, {{ user.first_name|default:user.username }} 👋</h1>
-    <p class="text-gray-600">Bienvenida a tu panel de administración</p>
+<div class="mb-8 md:mb-12 animate-fade-up">
+    <h1 class="text-3xl md:text-4xl font-bold mb-2" style="color: #E5E7EB;">Hola, {{ user.first_name|default:user.username }} 👋</h1>
+    <p style="color: #9CA3AF;">Bienvenida a tu panel de administración</p>
 </div>
 
 <!-- Cards de resumen -->
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-    <div class="bg-white rounded-lg shadow-md p-6">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-8 md:mb-12">
+    <div class="card hover-lift animate-scale-in animate-stagger-1">
         <div class="flex items-center justify-between">
             <div>
-                <p class="text-gray-600 text-sm mb-1">Pedidos nuevos</p>
-                <p class="text-3xl font-bold text-indigo-600">{{ pedidos_nuevos }}</p>
+                <p class="text-sm mb-1" style="color: #9CA3AF;">Pedidos nuevos</p>
+                <p class="text-3xl font-bold bg-gradient-to-r from-[#F97316] via-[#EC4899] to-[#8B5CF6] bg-clip-text text-transparent">{{ pedidos_nuevos }}</p>
             </div>
-            <div class="bg-indigo-100 rounded-full p-4">
-                <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div style="background: rgba(236, 72, 153, 0.1); border-radius: 9999px; padding: 1rem;">
+                <svg class="w-8 h-8" style="color: #EC4899;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
                 </svg>
             </div>
         </div>
     </div>
 
-    <div class="bg-white rounded-lg shadow-md p-6">
+    <div class="card hover-lift animate-scale-in animate-stagger-2">
         <div class="flex items-center justify-between">
             <div>
-                <p class="text-gray-600 text-sm mb-1">Esta semana</p>
-                <p class="text-3xl font-bold text-green-600">{{ pedidos_semana }}</p>
+                <p class="text-sm mb-1" style="color: #9CA3AF;">Esta semana</p>
+                <p class="text-3xl font-bold bg-gradient-to-r from-[#F97316] via-[#EC4899] to-[#8B5CF6] bg-clip-text text-transparent">{{ pedidos_semana }}</p>
             </div>
-            <div class="bg-green-100 rounded-full p-4">
-                <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div style="background: rgba(16, 185, 129, 0.1); border-radius: 9999px; padding: 1rem;">
+                <svg class="w-8 h-8" style="color: #10b981;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                 </svg>
             </div>
         </div>
     </div>
 
-    <div class="bg-white rounded-lg shadow-md p-6">
+    <div class="card hover-lift animate-scale-in animate-stagger-3">
         <div class="flex items-center justify-between">
             <div>
-                <p class="text-gray-600 text-sm mb-1">Productos activos</p>
-                <p class="text-3xl font-bold text-purple-600">{{ productos_activos }}</p>
+                <p class="text-sm mb-1" style="color: #9CA3AF;">Productos activos</p>
+                <p class="text-3xl font-bold bg-gradient-to-r from-[#F97316] via-[#EC4899] to-[#8B5CF6] bg-clip-text text-transparent">{{ productos_activos }}</p>
             </div>
-            <div class="bg-purple-100 rounded-full p-4">
-                <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div style="background: rgba(139, 92, 246, 0.1); border-radius: 9999px; padding: 1rem;">
+                <svg class="w-8 h-8" style="color: #8B5CF6;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
                 </svg>
             </div>
@@ -54,59 +54,59 @@
 </div>
 
 <!-- Accesos rápidos -->
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-    <a href="{% url 'dashboard:productos_lista' %}" class="bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition text-center">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 mb-8 md:mb-12">
+    <a href="{% url 'dashboard:productos_lista' %}" class="card hover-lift text-center animate-scale-in animate-stagger-1">
         <div class="text-4xl mb-3">🛍</div>
-        <h3 class="text-xl font-semibold text-gray-900">Productos</h3>
-        <p class="text-gray-600 text-sm mt-2">Gestionar productos</p>
+        <h3 class="text-xl font-semibold mb-2" style="color: #E5E7EB;">Productos</h3>
+        <p class="text-sm mt-2" style="color: #9CA3AF;">Gestionar productos</p>
     </a>
 
-    <a href="{% url 'dashboard:pedidos_lista' %}" class="bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition text-center">
+    <a href="{% url 'dashboard:pedidos_lista' %}" class="card hover-lift text-center animate-scale-in animate-stagger-2">
         <div class="text-4xl mb-3">📦</div>
-        <h3 class="text-xl font-semibold text-gray-900">Pedidos</h3>
-        <p class="text-gray-600 text-sm mt-2">Ver y gestionar pedidos</p>
+        <h3 class="text-xl font-semibold mb-2" style="color: #E5E7EB;">Pedidos</h3>
+        <p class="text-sm mt-2" style="color: #9CA3AF;">Ver y gestionar pedidos</p>
     </a>
 
-    <a href="{% url 'dashboard:configuracion_sitio' %}" class="bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition text-center">
+    <a href="{% url 'dashboard:configuracion_sitio' %}" class="card hover-lift text-center animate-scale-in animate-stagger-3">
         <div class="text-4xl mb-3">⚙️</div>
-        <h3 class="text-xl font-semibold text-gray-900">Configuración</h3>
-        <p class="text-gray-600 text-sm mt-2">Ajustes del sitio</p>
+        <h3 class="text-xl font-semibold mb-2" style="color: #E5E7EB;">Configuración</h3>
+        <p class="text-sm mt-2" style="color: #9CA3AF;">Ajustes del sitio</p>
     </a>
 
-    <div class="bg-white rounded-lg shadow-md p-6 text-center">
+    <div class="card text-center animate-scale-in animate-stagger-4">
         <div class="text-4xl mb-3">📊</div>
-        <h3 class="text-xl font-semibold text-gray-900">Resumen</h3>
-        <p class="text-gray-600 text-sm mt-2">{{ pedidos_semana }} pedidos esta semana</p>
+        <h3 class="text-xl font-semibold mb-2" style="color: #E5E7EB;">Resumen</h3>
+        <p class="text-sm mt-2" style="color: #9CA3AF;">{{ pedidos_semana }} pedidos esta semana</p>
     </div>
 </div>
 
 <!-- Pedidos recientes -->
-<div class="bg-white rounded-lg shadow-md p-6">
-    <h2 class="text-xl font-semibold text-gray-900 mb-4">Pedidos recientes</h2>
+<div class="card animate-fade-up animate-stagger-3">
+    <h2 class="text-xl font-semibold mb-6" style="color: #E5E7EB;">Pedidos recientes</h2>
     {% if pedidos_recientes %}
     <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-gray-50">
-                <tr>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Cliente</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Producto</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Fecha</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Estado</th>
+        <table class="min-w-full" style="border-collapse: separate; border-spacing: 0;">
+            <thead>
+                <tr style="background: rgba(236, 72, 153, 0.05); border-bottom: 1px solid rgba(229, 231, 235, 0.1);">
+                    <th class="px-6 py-3 text-left text-xs font-medium uppercase" style="color: #E5E7EB;">Cliente</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium uppercase" style="color: #E5E7EB;">Producto</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium uppercase" style="color: #E5E7EB;">Fecha</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium uppercase" style="color: #E5E7EB;">Estado</th>
                 </tr>
             </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
+            <tbody>
                 {% for pedido in pedidos_recientes %}
-                <tr>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ pedido.nombre }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ pedido.producto.titulo|default:"Personalizado" }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ pedido.fecha_creacion|date:"d/m/Y" }}</td>
+                <tr class="hover:bg-[rgba(236,72,153,0.05)] transition" style="border-bottom: 1px solid rgba(229, 231, 235, 0.05);">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium" style="color: #E5E7EB;">{{ pedido.nombre }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm" style="color: #9CA3AF;">{{ pedido.producto.titulo|default:"Personalizado" }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm" style="color: #9CA3AF;">{{ pedido.fecha_creacion|date:"d/m/Y" }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        <span class="px-2 py-1 text-xs font-semibold rounded-full 
-                            {% if pedido.estado == 'nuevo' %}bg-blue-100 text-blue-800
-                            {% elif pedido.estado == 'confirmado' %}bg-yellow-100 text-yellow-800
-                            {% elif pedido.estado == 'en_produccion' %}bg-pink-100 text-pink-800
-                            {% elif pedido.estado == 'listo' %}bg-green-100 text-green-800
-                            {% else %}bg-gray-100 text-gray-800{% endif %}">
+                        <span class="px-3 py-1.5 text-xs font-semibold rounded-full border transition-all duration-200
+                            {% if pedido.estado == 'nuevo' %}bg-blue-500/25 text-blue-300 border-blue-500/30
+                            {% elif pedido.estado == 'confirmado' %}bg-yellow-500/25 text-yellow-300 border-yellow-500/30
+                            {% elif pedido.estado == 'en_produccion' %}bg-pink-500/25 text-pink-300 border-pink-500/30
+                            {% elif pedido.estado == 'listo' %}bg-green-500/25 text-green-300 border-green-500/30
+                            {% else %}bg-gray-500/25 text-gray-400 border-gray-500/30{% endif %}">
                             {{ pedido.get_estado_display }}
                         </span>
                     </td>
@@ -116,10 +116,10 @@
         </table>
     </div>
     {% else %}
-    <p class="text-gray-600 text-center py-8">No hay pedidos aún</p>
+    <p class="text-center py-8" style="color: #9CA3AF;">No hay pedidos aún</p>
     {% endif %}
-    <div class="mt-4 text-center">
-        <a href="{% url 'dashboard:pedidos_lista' %}" class="text-indigo-600 hover:text-indigo-800 font-medium">
+    <div class="mt-6 text-center">
+        <a href="{% url 'dashboard:pedidos_lista' %}" class="hover-glow font-medium" style="color: #EC4899;">
             Ver todos los pedidos →
         </a>
     </div>

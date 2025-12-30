@@ -273,5 +273,3 @@ Proyecto privado - Todos los derechos reservados
 Para consultas sobre el proyecto, contactar al desarrollador.
 
 ---
-
-**Desarrollado con ❤️ para cami.zco**
