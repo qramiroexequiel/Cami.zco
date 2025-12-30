@@ -5,7 +5,6 @@ from django.utils import timezone
 from datetime import timedelta
 from catalogo.models import Producto, ImagenProducto, ConfiguracionSitio
 from pedidos.models import Pedido, ConfiguracionPedido, ESTADO_CHOICES
-from cloudinary.uploader import upload
 
 
 @login_required
@@ -58,10 +57,9 @@ def producto_crear(request):
             # Subir imagen si existe
             if 'imagen' in request.FILES:
                 imagen_file = request.FILES['imagen']
-                upload_result = upload(imagen_file, folder='cami_zco/productos')
                 ImagenProducto.objects.create(
                     producto=producto,
-                    imagen=upload_result['public_id'],
+                    imagen=imagen_file,
                     es_principal=True
                 )
             
@@ -93,10 +91,9 @@ def producto_editar(request, producto_id):
             # Subir nueva imagen si existe
             if 'imagen' in request.FILES:
                 imagen_file = request.FILES['imagen']
-                upload_result = upload(imagen_file, folder='cami_zco/productos')
                 ImagenProducto.objects.create(
                     producto=producto,
-                    imagen=upload_result['public_id'],
+                    imagen=imagen_file,
                     es_principal=True
                 )
             

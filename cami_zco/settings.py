@@ -37,9 +37,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Third party
-    'cloudinary',
-    'cloudinary_storage',
     # Local apps
     'catalogo',
     'pedidos',
@@ -104,8 +101,10 @@ if DATABASE_URL.startswith('sqlite'):
 else:
     # Validar que DATABASE_URL esté bien formada
     try:
+        # En serverless (Vercel), conn_max_age puede causar problemas en cold starts
+        # Usar conn_max_age=0 para conexiones efímeras (más seguro en serverless)
         DATABASES = {
-            'default': dj_database_url.parse(DATABASE_URL, conn_max_age=600)
+            'default': dj_database_url.parse(DATABASE_URL, conn_max_age=0)
         }
     except Exception as e:
         raise ValueError(
@@ -162,35 +161,8 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# Cloudinary settings
-CLOUDINARY_CLOUD_NAME = config('CLOUDINARY_CLOUD_NAME', default='')
-CLOUDINARY_API_KEY = config('CLOUDINARY_API_KEY', default='')
-CLOUDINARY_API_SECRET = config('CLOUDINARY_API_SECRET', default='')
-
-# Validar Cloudinary INMEDIATAMENTE después de leer variables
-# En producción (DEBUG=False): fail fast si faltan variables
-# En desarrollo (DEBUG=True): usar FileSystemStorage local si faltan
-CLOUDINARY_CONFIGURED = bool(
-    CLOUDINARY_CLOUD_NAME and CLOUDINARY_API_KEY and CLOUDINARY_API_SECRET
-)
-
-if not DEBUG and not CLOUDINARY_CONFIGURED:
-    raise ValueError(
-        "Variables de Cloudinary no configuradas en producción. "
-        "CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY y CLOUDINARY_API_SECRET deben estar en .env"
-    )
-
-# Solo configurar Cloudinary si las variables son válidas
-if CLOUDINARY_CONFIGURED:
-    CLOUDINARY_STORAGE = {
-        'CLOUD_NAME': CLOUDINARY_CLOUD_NAME,
-        'API_KEY': CLOUDINARY_API_KEY,
-        'API_SECRET': CLOUDINARY_API_SECRET,
-    }
-    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-else:
-    # En desarrollo local sin Cloudinary, usar FileSystemStorage
-    DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+# Usar FileSystemStorage estándar de Django para media files
+DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/6.0/ref/settings/#default-auto-field
