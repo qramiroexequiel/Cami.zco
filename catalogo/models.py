@@ -1,7 +1,6 @@
 from django.db import models
 from django.utils import timezone
 from django.utils.text import slugify
-from cloudinary.models import CloudinaryField
 
 
 class Categoria(models.Model):
@@ -120,7 +119,7 @@ class Producto(models.Model):
 
 class ImagenProducto(models.Model):
     producto = models.ForeignKey(Producto, related_name='imagenes', on_delete=models.CASCADE)
-    imagen = CloudinaryField('imagen', folder='cami_zco/productos')
+    imagen = models.ImageField(upload_to='productos/', verbose_name='imagen')
     orden = models.PositiveIntegerField(default=0)
     es_principal = models.BooleanField(default=False)
 
@@ -180,7 +179,7 @@ class ImagenSeccion(models.Model):
     
     seccion = models.ForeignKey(SeccionHome, related_name='imagenes', on_delete=models.CASCADE, null=True, blank=True)
     tipo = models.CharField(max_length=20, choices=TIPO_CHOICES, default='proceso')
-    imagen = CloudinaryField('imagen', folder='cami_zco/secciones')
+    imagen = models.ImageField(upload_to='secciones/', verbose_name='imagen')
     alt_text = models.CharField(max_length=200, help_text="Texto alternativo para accesibilidad")
     orden = models.PositiveIntegerField(default=0)
     activa = models.BooleanField(default=True)
@@ -197,8 +196,8 @@ class ImagenSeccion(models.Model):
 
 class HeroHome(models.Model):
     """Modelo para gestionar el Hero de la home"""
-    imagen_fondo = CloudinaryField('imagen_fondo', folder='cami_zco/hero', null=True, blank=True, help_text="Imagen de fondo del hero")
-    logo = CloudinaryField('logo', folder='cami_zco/logo', null=True, blank=True, help_text="Logo de la marca")
+    imagen_fondo = models.ImageField(upload_to='hero/', null=True, blank=True, verbose_name='imagen_fondo', help_text="Imagen de fondo del hero")
+    logo = models.ImageField(upload_to='logo/', null=True, blank=True, verbose_name='logo', help_text="Logo de la marca")
     titulo = models.CharField(max_length=200, default="Vasos Tallados Personalizados")
     subtitulo = models.CharField(max_length=300, default="Diseños únicos para momentos especiales")
     texto_boton = models.CharField(max_length=50, default="Hacé tu pedido")
@@ -239,7 +238,7 @@ class PasoProceso(models.Model):
 
 class GaleriaTrabajo(models.Model):
     """Modelo para la galería de trabajos reales"""
-    imagen = CloudinaryField('imagen', folder='cami_zco/galeria')
+    imagen = models.ImageField(upload_to='galeria/', verbose_name='imagen')
     titulo = models.CharField(max_length=200, blank=True, help_text="Título opcional para la imagen")
     alt_text = models.CharField(max_length=200, help_text="Texto alternativo para accesibilidad")
     activa = models.BooleanField(default=True)
