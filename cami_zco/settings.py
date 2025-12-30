@@ -163,6 +163,7 @@ for origin in _csrf_origins_raw:
 
 SECURE_REFERRER_POLICY = 'strict-origin-when-cross-origin'
 
+# Production security settings
 if not DEBUG:
     SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True
@@ -170,6 +171,9 @@ if not DEBUG:
     SECURE_HSTS_SECONDS = 31536000
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
+    
+    # Trust proxy headers (required for Vercel/Heroku behind reverse proxy)
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 WHATSAPP_NUMBER = config('WHATSAPP_NUMBER', default='5491112345678')
 GA4_MEASUREMENT_ID = config('GA4_MEASUREMENT_ID', default='')
@@ -182,6 +186,10 @@ LOGGING = {
     'disable_existing_loggers': False,
     'formatters': {
         'verbose': {
+            'format': '{levelname} {asctime} {module} {message}',
+            'style': '{',
+        },
+        'production': {
             'format': '{levelname} {asctime} {module} {message}',
             'style': '{',
         },
@@ -206,7 +214,17 @@ LOGGING = {
     'loggers': {
         'django': {
             'handlers': ['console', 'file'],
-            'level': config('DJANGO_LOG_LEVEL', default='INFO'),
+            'level': config('DJANGO_LOG_LEVEL', default='INFO' if DEBUG else 'WARNING'),
+            'propagate': False,
+        },
+        'django.request': {
+            'handlers': ['console', 'file'],
+            'level': 'ERROR' if not DEBUG else 'INFO',
+            'propagate': False,
+        },
+        'django.security': {
+            'handlers': ['console', 'file'],
+            'level': 'WARNING',
             'propagate': False,
         },
     },
