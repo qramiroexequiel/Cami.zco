@@ -120,7 +120,7 @@
                         {% if config_sitio and config_sitio.whatsapp_numero and config_sitio.whatsapp_numero.strip %}
                         {% mensaje_whatsapp as mensaje_codificado %}
                                <a href="https://wa.me/{{ config_sitio.whatsapp_numero }}?text={{ mensaje_codificado }}"
-                                  target="_blank"
+                       target="_blank" 
                                   rel="noopener noreferrer"
                                   class="footer-social-link">
                                    <svg class="w-5 h-5 footer-social-icon text-[#25D366]" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">

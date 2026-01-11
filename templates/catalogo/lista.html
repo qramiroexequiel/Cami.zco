@@ -34,12 +34,12 @@
         {% for producto in productos %}
         <div class="card overflow-hidden hover-lift animate-scale-in {% cycle 'animate-stagger-1' 'animate-stagger-2' 'animate-stagger-3' %}">
             <!-- Imagen protagonista -->
-            {% if producto.imagenes.first %}
-            <img src="{{ producto.imagenes.first.imagen.url }}" 
-                 alt="{{ producto.titulo }}" 
+                {% if producto.imagenes.first %}
+                <img src="{{ producto.imagenes.first.imagen.url }}" 
+                     alt="{{ producto.titulo }}" 
                  class="w-full h-64 object-cover transition-transform duration-150 hover:scale-105"
                  style="min-height: 256px;">
-            {% else %}
+                {% else %}
             <div class="w-full h-64 flex items-center justify-center" style="background-color: #020617; min-height: 256px;">
                 <span style="color: #9CA3AF;">Sin imagen</span>
             </div>

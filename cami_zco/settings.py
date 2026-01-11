@@ -91,9 +91,9 @@ if DATABASE_URL.startswith('sqlite'):
     }
 else:
     try:
-        DATABASES = {
+    DATABASES = {
             'default': dj_database_url.parse(DATABASE_URL, conn_max_age=0)
-        }
+    }
     except Exception as e:
         raise ValueError(
             f"Error al parsear DATABASE_URL: {e}. "
@@ -171,7 +171,7 @@ if not DEBUG:
     SECURE_HSTS_SECONDS = 31536000
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
-    
+
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 WHATSAPP_NUMBER = config('WHATSAPP_NUMBER', default='5491112345678')
@@ -235,7 +235,7 @@ LOGGING = {
 }
 
 try:
-    os.makedirs(BASE_DIR / 'logs', exist_ok=True)
+os.makedirs(BASE_DIR / 'logs', exist_ok=True)
 except (OSError, PermissionError):
     if 'file' in LOGGING.get('handlers', {}):
         LOGGING['handlers'] = {k: v for k, v in LOGGING['handlers'].items() if k == 'console'}

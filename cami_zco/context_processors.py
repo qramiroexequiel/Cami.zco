@@ -18,7 +18,7 @@ def whatsapp_number(request):
 def google_analytics(request):
     """Context processor para Google Analytics 4"""
     try:
-        ga4_id = getattr(settings, 'GA4_MEASUREMENT_ID', '')
+    ga4_id = getattr(settings, 'GA4_MEASUREMENT_ID', '')
         if ga4_id and isinstance(ga4_id, str) and ga4_id.strip():
             ga4_id = ga4_id.strip()
         else:

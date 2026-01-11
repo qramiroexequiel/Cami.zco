@@ -21,9 +21,9 @@
             <div class="card overflow-hidden hover-lift animate-scale-in {% cycle 'animate-stagger-1' 'animate-stagger-2' 'animate-stagger-3' %}">
                 {% if producto.imagenes.first %}
                 <a href="{% url 'catalogo:detalle' producto.slug %}">
-                    <img src="{{ producto.imagenes.first.imagen.url }}" 
-                         alt="{{ producto.titulo }}" 
-                         loading="lazy"
+                <img src="{{ producto.imagenes.first.imagen.url }}" 
+                     alt="{{ producto.titulo }}" 
+                     loading="lazy"
                          class="w-full h-64 object-cover transition-transform duration-150 hover:scale-105"
                          style="min-height: 256px;">
                 </a>
